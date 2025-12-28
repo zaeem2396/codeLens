@@ -139,7 +139,6 @@ src/
 ## 📖 Documentation
 
 - [Usage Guide](docs/USAGE.md) - Detailed installation and configuration
-- [Progress Tracker](docs/PROGRESS.md) - Development status and roadmap
 
 ---
 

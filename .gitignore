@@ -3,7 +3,7 @@
 composer.lock
 
 # Documentation (local development tracking)
-/docs/
+/docs/PROGRESS.md
 
 # IDE and Editor files
 .idea/
