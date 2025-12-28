@@ -1,0 +1,37 @@
+# CodeLens Configuration for Symfony
+# Copy this file to config/packages/codelens.yaml
+
+codelens:
+    # Environments where CodeLens is active
+    # CodeLens will silently disable itself in other environments
+    enabled_environments:
+        - dev
+        - staging
+
+    # Directories to scan for PHP files (relative to project root)
+    scan_paths:
+        - src
+
+    # Directories to exclude from scanning
+    exclude_paths:
+        - vendor
+        - var
+        - node_modules
+        - public
+        - tests
+
+    # File extensions to analyze
+    file_extensions:
+        - php
+
+    # Storage driver for scan results: 'json' or 'sqlite'
+    storage_driver: json
+
+    # Directory name for CodeLens cache (relative to var/cache/{env}/)
+    cache_directory: codelens
+
+    # Web UI settings
+    ui_enabled: true
+    ui_route_prefix: codelens
+    ui_middleware: []
+
