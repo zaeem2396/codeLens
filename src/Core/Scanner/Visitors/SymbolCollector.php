@@ -17,7 +17,7 @@ use PhpParser\NodeVisitorAbstract;
 
 /**
  * AST visitor that collects symbol information.
- * 
+ *
  * Extracts classes, interfaces, traits, enums, methods,
  * and properties from the AST.
  */
@@ -25,10 +25,10 @@ final class SymbolCollector extends NodeVisitorAbstract
 {
     private string $filePath;
     private ?string $namespace = null;
-    
+
     /** @var array<string, string> Alias => FQCN */
     private array $useStatements = [];
-    
+
     /** @var array<SymbolInterface> */
     private array $symbols = [];
 
@@ -77,7 +77,7 @@ final class SymbolCollector extends NodeVisitorAbstract
 
     /**
      * Get collected symbols.
-     * 
+     *
      * @return array<SymbolInterface>
      */
     public function getSymbols(): array
@@ -95,7 +95,7 @@ final class SymbolCollector extends NodeVisitorAbstract
 
     /**
      * Get use statements.
-     * 
+     *
      * @return array<string, string>
      */
     public function getUseStatements(): array
@@ -113,7 +113,7 @@ final class SymbolCollector extends NodeVisitorAbstract
         }
 
         $fqn = $this->buildFqn($node->name->toString());
-        
+
         $extends = null;
         if ($node->extends !== null) {
             $extends = $this->resolveTypeName($node->extends->toString());
@@ -160,7 +160,7 @@ final class SymbolCollector extends NodeVisitorAbstract
             properties: $properties,
             isAbstract: $node->isAbstract(),
             isFinal: $node->isFinal(),
-            isReadonly: $node->isReadonly()
+            isReadonly: $node->isReadonly(),
         );
     }
 
@@ -191,7 +191,7 @@ final class SymbolCollector extends NodeVisitorAbstract
             lineEnd: $node->getEndLine(),
             namespace: $this->namespace,
             extends: $extends,
-            methods: $methods
+            methods: $methods,
         );
     }
 
@@ -225,7 +225,7 @@ final class SymbolCollector extends NodeVisitorAbstract
             lineEnd: $node->getEndLine(),
             namespace: $this->namespace,
             methods: $methods,
-            properties: $properties
+            properties: $properties,
         );
     }
 
@@ -269,7 +269,7 @@ final class SymbolCollector extends NodeVisitorAbstract
             implements: $implements,
             cases: $cases,
             methods: $methods,
-            scalarType: $scalarType
+            scalarType: $scalarType,
         );
     }
 
@@ -291,7 +291,7 @@ final class SymbolCollector extends NodeVisitorAbstract
             if ($param->type !== null) {
                 $paramType = $this->nodeTypeToString($param->type);
             }
-            
+
             $parameters[] = [
                 'name' => '$' . $param->var->name,
                 'type' => $paramType,
@@ -317,7 +317,7 @@ final class SymbolCollector extends NodeVisitorAbstract
             isAbstract: $node->isAbstract(),
             isFinal: $node->isFinal(),
             returnType: $returnType,
-            parameters: $parameters
+            parameters: $parameters,
         );
     }
 
@@ -327,7 +327,7 @@ final class SymbolCollector extends NodeVisitorAbstract
     private function collectProperty(
         Node\PropertyItem $prop,
         Stmt\Property $stmt,
-        string $parentFqn
+        string $parentFqn,
     ): PropertySymbol {
         $visibility = 'public';
         if ($stmt->isPrivate()) {
@@ -350,7 +350,7 @@ final class SymbolCollector extends NodeVisitorAbstract
             type: $type,
             isStatic: $stmt->isStatic(),
             isReadonly: $stmt->isReadonly(),
-            hasDefault: $prop->default !== null
+            hasDefault: $prop->default !== null,
         );
     }
 
@@ -411,16 +411,15 @@ final class SymbolCollector extends NodeVisitorAbstract
         }
 
         if ($type instanceof Node\UnionType) {
-            $types = array_map(fn($t) => $this->nodeTypeToString($t), $type->types);
+            $types = array_map(fn ($t) => $this->nodeTypeToString($t), $type->types);
             return implode('|', $types);
         }
 
         if ($type instanceof Node\IntersectionType) {
-            $types = array_map(fn($t) => $this->nodeTypeToString($t), $type->types);
+            $types = array_map(fn ($t) => $this->nodeTypeToString($t), $type->types);
             return implode('&', $types);
         }
 
         return 'mixed';
     }
 }
-
