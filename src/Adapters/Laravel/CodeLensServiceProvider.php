@@ -80,10 +80,9 @@ class CodeLensServiceProvider extends ServiceProvider
      */
     private function registerCommands(): void
     {
-        // Commands will be added in Phase 1
-        // $this->commands([
-        //     Commands\ScanCommand::class,
-        // ]);
+        $this->commands([
+            Commands\ScanCommand::class,
+        ]);
     }
 
     /**
