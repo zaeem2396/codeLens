@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Symfony Bundle for CodeLens.
- * 
+ *
  * Integrates CodeLens with Symfony applications,
  * providing automatic configuration and registration.
  */
@@ -30,4 +30,3 @@ class CodeLensBundle extends Bundle
         return \dirname(__DIR__ . '/../');
     }
 }
-

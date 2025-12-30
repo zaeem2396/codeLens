@@ -8,10 +8,11 @@ use CodeLens\Core\Contracts\FrameworkAdapterInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Throwable;
 
 /**
  * Symfony-specific adapter for CodeLens.
- * 
+ *
  * Provides Symfony-specific implementations for
  * framework detection, routing, and service container access.
  */
@@ -24,7 +25,7 @@ class SymfonyAdapter implements FrameworkAdapterInterface
     public function __construct(
         KernelInterface $kernel,
         RouterInterface $router,
-        ContainerInterface $container
+        ContainerInterface $container,
     ) {
         $this->kernel = $kernel;
         $this->router = $router;
@@ -85,7 +86,7 @@ class SymfonyAdapter implements FrameworkAdapterInterface
     public function getConfigValue(string $key, mixed $default = null): mixed
     {
         $parameterName = 'codelens.' . $key;
-        
+
         if ($this->container->hasParameter($parameterName)) {
             return $this->container->getParameter($parameterName);
         }
@@ -103,7 +104,7 @@ class SymfonyAdapter implements FrameworkAdapterInterface
 
     /**
      * Get registered routes.
-     * 
+     *
      * Returns an array of route information for usage analysis.
      */
     public function getRoutes(): array
@@ -129,7 +130,7 @@ class SymfonyAdapter implements FrameworkAdapterInterface
 
     /**
      * Get service container bindings.
-     * 
+     *
      * Returns an array of service binding information.
      * Note: In Symfony, we can only introspect public services
      * or those explicitly tagged.
@@ -171,11 +172,10 @@ class SymfonyAdapter implements FrameworkAdapterInterface
                     return get_class($service);
                 }
             }
-        } catch (\Throwable) {
+        } catch (Throwable) {
             // Service might not be instantiable at this point
         }
 
         return null;
     }
 }
-

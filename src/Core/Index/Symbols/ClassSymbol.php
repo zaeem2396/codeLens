@@ -29,8 +29,9 @@ final readonly class ClassSymbol implements SymbolInterface
         public array $properties = [],
         public bool $isAbstract = false,
         public bool $isFinal = false,
-        public bool $isReadonly = false
-    ) {}
+        public bool $isReadonly = false,
+    ) {
+    }
 
     public function getName(): string
     {
@@ -115,8 +116,8 @@ final readonly class ClassSymbol implements SymbolInterface
             'extends' => $this->extends,
             'implements' => $this->implements,
             'traits' => $this->traits,
-            'methods' => array_map(fn($m) => $m->toArray(), $this->methods),
-            'properties' => array_map(fn($p) => $p->toArray(), $this->properties),
+            'methods' => array_map(fn ($m) => $m->toArray(), $this->methods),
+            'properties' => array_map(fn ($p) => $p->toArray(), $this->properties),
             'is_abstract' => $this->isAbstract,
             'is_final' => $this->isFinal,
             'is_readonly' => $this->isReadonly,
@@ -135,12 +136,11 @@ final readonly class ClassSymbol implements SymbolInterface
             extends: $data['extends'] ?? null,
             implements: $data['implements'] ?? [],
             traits: $data['traits'] ?? [],
-            methods: array_map(fn($m) => MethodSymbol::fromArray($m), $data['methods'] ?? []),
-            properties: array_map(fn($p) => PropertySymbol::fromArray($p), $data['properties'] ?? []),
+            methods: array_map(fn ($m) => MethodSymbol::fromArray($m), $data['methods'] ?? []),
+            properties: array_map(fn ($p) => PropertySymbol::fromArray($p), $data['properties'] ?? []),
             isAbstract: $data['is_abstract'] ?? false,
             isFinal: $data['is_final'] ?? false,
-            isReadonly: $data['is_readonly'] ?? false
+            isReadonly: $data['is_readonly'] ?? false,
         );
     }
 }
-

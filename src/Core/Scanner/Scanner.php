@@ -11,7 +11,7 @@ use CodeLens\Core\Storage\StorageInterface;
 
 /**
  * Main scanner orchestrator.
- * 
+ *
  * Coordinates file discovery, parsing, and indexing.
  */
 final class Scanner
@@ -30,7 +30,7 @@ final class Scanner
     public function __construct(
         Configuration $config,
         string $basePath,
-        StorageInterface $storage
+        StorageInterface $storage,
     ) {
         $this->config = $config;
         $this->basePath = $basePath;
@@ -43,7 +43,7 @@ final class Scanner
 
     /**
      * Set progress callback.
-     * 
+     *
      * @param callable(string $file, int $current, int $total): void $callback
      */
     public function onProgress(callable $callback): self
@@ -60,7 +60,7 @@ final class Scanner
         $startTime = microtime(true);
 
         // Load existing data unless fresh scan
-        if (!$fresh && $this->storage->hasData()) {
+        if (! $fresh && $this->storage->hasData()) {
             $this->fileIndex = $this->storage->loadFileIndex();
             $this->symbolRegistry = $this->storage->loadSymbolRegistry();
         } else {
@@ -70,15 +70,15 @@ final class Scanner
 
         // Discover files
         $discoveredFiles = $this->fileDiscovery->discover();
-        
+
         // Determine what needs to be scanned
         $filesToScan = [];
         $unchangedFiles = [];
-        
+
         foreach ($discoveredFiles as $path => $fileInfo) {
             $fileWithChecksum = $fileInfo->withChecksum();
-            
-            if (!$fresh && !$this->fileIndex->hasChanged($fileWithChecksum)) {
+
+            if (! $fresh && ! $this->fileIndex->hasChanged($fileWithChecksum)) {
                 $unchangedFiles[] = $path;
             } else {
                 $filesToScan[$path] = $fileWithChecksum;
@@ -100,7 +100,7 @@ final class Scanner
 
         foreach ($filesToScan as $path => $fileInfo) {
             $current++;
-            
+
             if ($this->progressCallback !== null) {
                 ($this->progressCallback)($fileInfo->relativePath, $current, $totalFiles);
             }
@@ -110,7 +110,7 @@ final class Scanner
 
             // Parse file
             $parseResult = $this->parser->parseFile($path);
-            
+
             if ($parseResult->isError()) {
                 $errors[$path] = $parseResult->error;
                 continue;
@@ -158,7 +158,7 @@ final class Scanner
             duration: $duration,
             errors: $errors,
             fileIndex: $this->fileIndex,
-            symbolRegistry: $this->symbolRegistry
+            symbolRegistry: $this->symbolRegistry,
         );
     }
 
@@ -177,7 +177,7 @@ final class Scanner
 
         // Discover files in path
         $discoveredFiles = $this->fileDiscovery->discoverInPath($path);
-        
+
         $totalFiles = count($discoveredFiles);
         $current = 0;
         $errors = [];
@@ -185,7 +185,7 @@ final class Scanner
 
         foreach ($discoveredFiles as $filePath => $fileInfo) {
             $current++;
-            
+
             if ($this->progressCallback !== null) {
                 ($this->progressCallback)($fileInfo->relativePath, $current, $totalFiles);
             }
@@ -196,7 +196,7 @@ final class Scanner
             // Parse file
             $fileWithChecksum = $fileInfo->withChecksum()->withLineCount();
             $parseResult = $this->parser->parseFile($filePath);
-            
+
             if ($parseResult->isError()) {
                 $errors[$filePath] = $parseResult->error;
                 continue;
@@ -229,7 +229,7 @@ final class Scanner
             duration: $endTime - $startTime,
             errors: $errors,
             fileIndex: $this->fileIndex,
-            symbolRegistry: $this->symbolRegistry
+            symbolRegistry: $this->symbolRegistry,
         );
     }
 
@@ -248,5 +248,20 @@ final class Scanner
     {
         return $this->symbolRegistry;
     }
-}
 
+    /**
+     * Get the configuration.
+     */
+    public function getConfiguration(): Configuration
+    {
+        return $this->config;
+    }
+
+    /**
+     * Get the base path.
+     */
+    public function getBasePath(): string
+    {
+        return $this->basePath;
+    }
+}

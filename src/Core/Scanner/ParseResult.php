@@ -21,12 +21,13 @@ final readonly class ParseResult
         public ?string $error,
         public array $symbols,
         public ?string $namespace,
-        public array $useStatements
-    ) {}
+        public array $useStatements,
+    ) {
+    }
 
     /**
      * Create a successful parse result.
-     * 
+     *
      * @param array<SymbolInterface> $symbols
      * @param array<string, string> $useStatements
      */
@@ -34,7 +35,7 @@ final readonly class ParseResult
         string $filePath,
         array $symbols,
         ?string $namespace = null,
-        array $useStatements = []
+        array $useStatements = [],
     ): self {
         return new self(
             filePath: $filePath,
@@ -42,7 +43,7 @@ final readonly class ParseResult
             error: null,
             symbols: $symbols,
             namespace: $namespace,
-            useStatements: $useStatements
+            useStatements: $useStatements,
         );
     }
 
@@ -57,7 +58,7 @@ final readonly class ParseResult
             error: $error,
             symbols: [],
             namespace: null,
-            useStatements: []
+            useStatements: [],
         );
     }
 
@@ -74,7 +75,7 @@ final readonly class ParseResult
      */
     public function isError(): bool
     {
-        return !$this->success;
+        return ! $this->success;
     }
 
     /**
@@ -84,7 +85,7 @@ final readonly class ParseResult
     {
         return array_filter(
             $this->symbols,
-            fn($s) => $s->getType() === 'class'
+            fn ($s) => $s->getType() === 'class',
         );
     }
 
@@ -95,7 +96,7 @@ final readonly class ParseResult
     {
         return array_filter(
             $this->symbols,
-            fn($s) => $s->getType() === 'interface'
+            fn ($s) => $s->getType() === 'interface',
         );
     }
 
@@ -106,7 +107,7 @@ final readonly class ParseResult
     {
         return array_filter(
             $this->symbols,
-            fn($s) => $s->getType() === 'trait'
+            fn ($s) => $s->getType() === 'trait',
         );
     }
 
@@ -117,7 +118,7 @@ final readonly class ParseResult
     {
         return array_filter(
             $this->symbols,
-            fn($s) => $s->getType() === 'enum'
+            fn ($s) => $s->getType() === 'enum',
         );
     }
 
@@ -132,8 +133,7 @@ final readonly class ParseResult
             'error' => $this->error,
             'namespace' => $this->namespace,
             'use_statements' => $this->useStatements,
-            'symbols' => array_map(fn($s) => $s->toArray(), $this->symbols),
+            'symbols' => array_map(fn ($s) => $s->toArray(), $this->symbols),
         ];
     }
 }
-

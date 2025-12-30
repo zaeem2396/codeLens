@@ -70,10 +70,10 @@ class ConfigurationTest extends TestCase
     public function testGetAndSet(): void
     {
         $config = new Configuration();
-        
+
         $config->set('custom_key', 'custom_value');
         $this->assertEquals('custom_value', $config->get('custom_key'));
-        
+
         $this->assertEquals('default', $config->get('nonexistent', 'default'));
     }
 
@@ -86,4 +86,3 @@ class ConfigurationTest extends TestCase
         $this->assertEquals(['app'], $array['scan_paths']);
     }
 }
-

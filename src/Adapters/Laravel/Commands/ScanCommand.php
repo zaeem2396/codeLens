@@ -45,7 +45,7 @@ class ScanCommand extends Command
 
         $basePath = base_path();
         $storagePath = storage_path('framework');
-        
+
         $storage = StorageFactory::create($config, $storagePath);
 
         if ($fresh) {
@@ -115,7 +115,7 @@ class ScanCommand extends Command
         if ($result->hasErrors()) {
             $this->warn("  ⚠️  {$result->getErrorCount()} file(s) had parse errors:");
             $this->info('');
-            
+
             foreach (array_slice($result->errors, 0, 10) as $file => $error) {
                 $shortPath = str_replace(base_path() . '/', '', $file);
                 $this->line("    • {$shortPath}");
@@ -138,4 +138,3 @@ class ScanCommand extends Command
         $this->info('');
     }
 }
-

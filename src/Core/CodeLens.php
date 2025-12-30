@@ -9,7 +9,7 @@ use CodeLens\Core\Contracts\FrameworkAdapterInterface;
 
 /**
  * CodeLens - Static Code Intelligence Tool
- * 
+ *
  * The main entry point for the CodeLens system.
  * This class orchestrates all code analysis operations
  * while remaining framework-agnostic.
@@ -17,7 +17,7 @@ use CodeLens\Core\Contracts\FrameworkAdapterInterface;
 final class CodeLens
 {
     private static ?self $instance = null;
-    
+
     private Configuration $configuration;
     private ?FrameworkAdapterInterface $adapter = null;
     private bool $initialized = false;
@@ -76,12 +76,12 @@ final class CodeLens
      */
     public function isEnabled(): bool
     {
-        if (!$this->initialized) {
+        if (! $this->initialized) {
             return false;
         }
 
         return $this->configuration->isEnabledForEnvironment(
-            $this->adapter->getCurrentEnvironment()
+            $this->adapter->getCurrentEnvironment(),
         );
     }
 
@@ -123,11 +123,10 @@ final class CodeLens
     private function validateEnvironment(): void
     {
         $currentEnv = $this->adapter->getCurrentEnvironment();
-        
-        if (!$this->configuration->isEnabledForEnvironment($currentEnv)) {
+
+        if (! $this->configuration->isEnabledForEnvironment($currentEnv)) {
             // Silent disable - we don't throw, we just won't activate
             $this->initialized = false;
         }
     }
 }
-

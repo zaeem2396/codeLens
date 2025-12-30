@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Dependency Injection Extension for CodeLens Symfony Bundle.
- * 
+ *
  * Handles the loading and configuration of CodeLens services
  * within the Symfony dependency injection container.
  */
@@ -82,4 +82,3 @@ class CodeLensExtension extends Extension
         return 'codelens';
     }
 }
-

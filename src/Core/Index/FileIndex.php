@@ -8,7 +8,7 @@ use CodeLens\Core\Scanner\FileInfo;
 
 /**
  * Index of all files in the codebase.
- * 
+ *
  * Tracks file metadata and checksums for incremental scanning.
  */
 final class FileIndex
@@ -50,7 +50,7 @@ final class FileIndex
 
     /**
      * Get all files.
-     * 
+     *
      * @return array<string, FileInfo>
      */
     public function all(): array
@@ -72,7 +72,7 @@ final class FileIndex
     public function hasChanged(FileInfo $file): bool
     {
         $existing = $this->get($file->absolutePath);
-        
+
         if ($existing === null) {
             return true; // New file
         }
@@ -93,16 +93,17 @@ final class FileIndex
 
     /**
      * Get files that have been removed.
-     * 
+     *
      * @param array<string, FileInfo> $currentFiles
+     *
      * @return array<string> Paths of removed files
      */
     public function getRemovedFiles(array $currentFiles): array
     {
         $removed = [];
-        
+
         foreach (array_keys($this->files) as $path) {
-            if (!isset($currentFiles[$path])) {
+            if (! isset($currentFiles[$path])) {
                 $removed[] = $path;
             }
         }
@@ -164,4 +165,3 @@ final class FileIndex
         ];
     }
 }
-

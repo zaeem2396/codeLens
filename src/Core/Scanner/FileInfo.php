@@ -15,8 +15,9 @@ final readonly class FileInfo
         public int $size,
         public int $lastModified,
         public ?string $checksum = null,
-        public ?int $lineCount = null
-    ) {}
+        public ?int $lineCount = null,
+    ) {
+    }
 
     /**
      * Calculate the checksum of the file.
@@ -28,14 +29,14 @@ final readonly class FileInfo
         }
 
         $hash = @hash_file('sha256', $this->absolutePath);
-        
+
         return new self(
             absolutePath: $this->absolutePath,
             relativePath: $this->relativePath,
             size: $this->size,
             lastModified: $this->lastModified,
             checksum: $hash ?: null,
-            lineCount: $this->lineCount
+            lineCount: $this->lineCount,
         );
     }
 
@@ -50,9 +51,9 @@ final readonly class FileInfo
 
         $lineCount = 0;
         $handle = @fopen($this->absolutePath, 'r');
-        
+
         if ($handle !== false) {
-            while (!feof($handle)) {
+            while (! feof($handle)) {
                 fgets($handle);
                 $lineCount++;
             }
@@ -65,7 +66,7 @@ final readonly class FileInfo
             size: $this->size,
             lastModified: $this->lastModified,
             checksum: $this->checksum,
-            lineCount: $lineCount
+            lineCount: $lineCount,
         );
     }
 
@@ -119,8 +120,7 @@ final readonly class FileInfo
             size: $data['size'],
             lastModified: $data['last_modified'],
             checksum: $data['checksum'] ?? null,
-            lineCount: $data['line_count'] ?? null
+            lineCount: $data['line_count'] ?? null,
         );
     }
 }
-

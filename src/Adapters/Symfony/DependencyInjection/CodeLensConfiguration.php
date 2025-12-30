@@ -9,7 +9,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * Configuration definition for CodeLens Symfony Bundle.
- * 
+ *
  * Defines the structure and validation rules for
  * the codelens.yaml configuration file.
  */
@@ -30,46 +30,46 @@ class CodeLensConfiguration implements ConfigurationInterface
                     ->scalarPrototype()->end()
                     ->info('Environments where CodeLens is active')
                 ->end()
-                
+
                 ->arrayNode('scan_paths')
                     ->defaultValue(['src'])
                     ->scalarPrototype()->end()
                     ->info('Directories to scan for PHP files')
                 ->end()
-                
+
                 ->arrayNode('exclude_paths')
                     ->defaultValue(['vendor', 'var', 'node_modules', 'public'])
                     ->scalarPrototype()->end()
                     ->info('Directories to exclude from scanning')
                 ->end()
-                
+
                 ->arrayNode('file_extensions')
                     ->defaultValue(['php'])
                     ->scalarPrototype()->end()
                     ->info('File extensions to analyze')
                 ->end()
-                
+
                 ->enumNode('storage_driver')
                     ->values(['json', 'sqlite'])
                     ->defaultValue('json')
                     ->info('Storage driver for scan results')
                 ->end()
-                
+
                 ->scalarNode('cache_directory')
                     ->defaultValue('codelens')
                     ->info('Directory name for CodeLens cache')
                 ->end()
-                
+
                 ->booleanNode('ui_enabled')
                     ->defaultTrue()
                     ->info('Enable the web UI')
                 ->end()
-                
+
                 ->scalarNode('ui_route_prefix')
                     ->defaultValue('codelens')
                     ->info('Route prefix for the web UI')
                 ->end()
-                
+
                 ->arrayNode('ui_middleware')
                     ->defaultValue([])
                     ->scalarPrototype()->end()
@@ -80,4 +80,3 @@ class CodeLensConfiguration implements ConfigurationInterface
         return $treeBuilder;
     }
 }
-

@@ -325,7 +325,7 @@ final class SymbolCollector extends NodeVisitorAbstract
      * Collect property information.
      */
     private function collectProperty(
-        Node\Stmt\PropertyProperty $prop,
+        Node\PropertyItem $prop,
         Stmt\Property $stmt,
         string $parentFqn
     ): PropertySymbol {
