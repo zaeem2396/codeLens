@@ -36,6 +36,12 @@ final class SymbolRegistry
     public function register(SymbolInterface $symbol): void
     {
         $fqn = $symbol->getFqn();
+
+        // If symbol with same FQN exists, remove it first to prevent duplicate index entries
+        if (isset($this->symbols[$fqn])) {
+            $this->remove($fqn);
+        }
+
         $this->symbols[$fqn] = $symbol;
 
         // Index by file
