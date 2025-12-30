@@ -76,7 +76,7 @@ CodeLens is being developed in independent, releasable phases:
 | Phase | Name | Status |
 |-------|------|--------|
 | 0 | Foundation & Identity | ✅ Complete |
-| 1 | Code Scanning & Indexing | 🔲 Planned |
+| 1 | Code Scanning & Indexing | ✅ Complete |
 | 2 | Metrics (Facts, Not Judgments) | 🔲 Planned |
 | 3 | Heuristic Flags (Soft Signals) | 🔲 Planned |
 | 4 | Usage Probability (Static Only) | 🔲 Planned |
@@ -109,6 +109,25 @@ codelens:
 'scan_paths' => ['app'],           // Directories to analyze
 'exclude_paths' => ['vendor'],     // Directories to skip
 'file_extensions' => ['php'],      // File types to include
+'storage_driver' => 'json',        // 'json' or 'sqlite'
+```
+
+---
+
+## 🔍 Scanning Your Codebase
+
+Scan your codebase to build the symbol index:
+
+```bash
+# Laravel
+php artisan codelens:scan              # Full scan
+php artisan codelens:scan --fresh      # Clear cache and rescan
+php artisan codelens:scan --path=app   # Scan specific path
+
+# Symfony
+php bin/console codelens:scan
+php bin/console codelens:scan --fresh
+php bin/console codelens:scan --path=src
 ```
 
 ---
@@ -117,19 +136,24 @@ codelens:
 
 ```
 src/
-├── Core/                          # Framework-agnostic core
+├── Core/
 │   ├── CodeLens.php               # Main entry point
 │   ├── Config/                    # Configuration handling
+│   ├── Scanner/                   # File discovery & AST parsing
+│   ├── Index/                     # Symbol registry & file index
+│   ├── Storage/                   # JSON & SQLite backends
 │   ├── Contracts/                 # Interfaces
 │   └── Exceptions/                # Exception classes
 ├── Adapters/
 │   ├── Laravel/                   # Laravel integration
 │   │   ├── CodeLensServiceProvider.php
 │   │   ├── LaravelAdapter.php
+│   │   ├── Commands/              # Artisan commands
 │   │   └── config/
 │   └── Symfony/                   # Symfony integration
 │       ├── CodeLensBundle.php
 │       ├── SymfonyAdapter.php
+│       ├── Command/               # Console commands
 │       └── DependencyInjection/
 └── UI/                            # Web interface (future)
 ```

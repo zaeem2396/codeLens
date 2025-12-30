@@ -144,17 +144,135 @@ codelens:
 
 ---
 
-## 📋 Current Features (Phase 0)
+## 📋 Current Features
 
-Phase 0 establishes the foundation. Currently, CodeLens:
-
+### Phase 0: Foundation
 - ✅ Installs cleanly in both Laravel and Symfony
 - ✅ Detects the framework automatically
 - ✅ Publishes configuration files
 - ✅ Respects environment restrictions
-- ✅ Provides a solid foundation for future features
 
-### Verifying Installation
+### Phase 1: Code Scanning & Indexing
+- ✅ AST-based parsing of PHP files
+- ✅ File discovery and indexing
+- ✅ Symbol extraction (classes, interfaces, traits, enums, methods, properties)
+- ✅ Incremental scanning with checksum-based change detection
+- ✅ JSON and SQLite storage backends
+- ✅ CLI commands for both frameworks
+
+---
+
+## 🔍 Scanning Your Codebase
+
+### Basic Scan
+
+Run a full scan of your codebase:
+
+```bash
+# Laravel
+php artisan codelens:scan
+
+# Symfony
+php bin/console codelens:scan
+```
+
+### Fresh Scan
+
+Clear all cached data and perform a complete rescan:
+
+```bash
+# Laravel
+php artisan codelens:scan --fresh
+
+# Symfony
+php bin/console codelens:scan --fresh
+```
+
+### Scan Specific Path
+
+Scan only a specific directory or file:
+
+```bash
+# Laravel
+php artisan codelens:scan --path=app/Services
+
+# Symfony
+php bin/console codelens:scan --path=src/Service
+```
+
+### Scan Output
+
+The scanner will display:
+
+```
+🔍 CodeLens Scanner
+==================
+
+  Starting scan...
+
+📊 Scan Results
+---------------
+
+  Files:
+    • Scanned:   42
+    • Unchanged: 0
+    • Removed:   0
+    • Total:     42
+
+  Symbols:
+    • Classes:    35
+    • Interfaces: 5
+    • Traits:     2
+    • Enums:      0
+    • Total:      42
+
+  Duration: 1.23s
+
+  ✅ Scan completed successfully!
+```
+
+---
+
+## 📁 Storage
+
+CodeLens stores scan results in your storage directory:
+
+**Laravel:** `storage/framework/codelens/`  
+**Symfony:** `var/cache/{env}/codelens/`
+
+### Storage Drivers
+
+Configure the storage driver in your configuration:
+
+```php
+// JSON storage (default) - human-readable, good for smaller projects
+'storage_driver' => 'json',
+
+// SQLite storage - faster lookups, better for large codebases
+'storage_driver' => 'sqlite',
+```
+
+---
+
+## 🔬 What Gets Indexed
+
+### File Information
+- Absolute and relative paths
+- File size and line count
+- Last modified timestamp
+- SHA-256 checksum (for change detection)
+
+### Symbols
+- **Classes:** name, namespace, extends, implements, traits, methods, properties
+- **Interfaces:** name, namespace, extends, methods
+- **Traits:** name, namespace, methods, properties
+- **Enums:** name, namespace, cases, backed type, methods
+- **Methods:** visibility, static, abstract, final, parameters, return type
+- **Properties:** visibility, type, static, readonly
+
+---
+
+## ✅ Verifying Installation
 
 #### Laravel
 
@@ -184,18 +302,6 @@ public function index(\CodeLens\Core\CodeLens $codelens): Response
 ---
 
 ## 🚀 Upcoming Features
-
-### Phase 1: Code Scanning & Indexing
-
-- CLI command to scan your codebase
-- Build file and symbol indexes
-- No analysis, just structured metadata
-
-```bash
-# Coming soon
-php artisan codelens:scan        # Laravel
-php bin/console codelens:scan    # Symfony
-```
 
 ### Phase 2: Metrics
 
