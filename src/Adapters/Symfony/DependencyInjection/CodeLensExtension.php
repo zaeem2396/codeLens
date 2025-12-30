@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CodeLens\Adapters\Symfony\DependencyInjection;
 
+use CodeLens\Adapters\Symfony\Command\ScanCommand;
 use CodeLens\Adapters\Symfony\SymfonyAdapter;
 use CodeLens\Core\CodeLens;
 use CodeLens\Core\Config\Configuration;
@@ -62,6 +63,15 @@ class CodeLensExtension extends Extension
         $codeLensDefinition->addMethodCall('initialize', [new Reference(SymfonyAdapter::class)]);
         $container->setDefinition(CodeLens::class, $codeLensDefinition);
         $container->setAlias('codelens', CodeLens::class);
+
+        // Register ScanCommand
+        $scanCommandDefinition = new Definition(ScanCommand::class);
+        $scanCommandDefinition->setArguments([
+            new Reference(Configuration::class),
+            new Reference('kernel'),
+        ]);
+        $scanCommandDefinition->addTag('console.command');
+        $container->setDefinition(ScanCommand::class, $scanCommandDefinition);
     }
 
     /**
