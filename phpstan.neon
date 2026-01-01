@@ -1,0 +1,10 @@
+parameters:
+    level: 4
+    paths:
+        - src/Core
+    excludePaths:
+        - src/Core/Scanner/Visitors/*  # Uses php-parser internal types
+    
+    # Be lenient during initial development
+    treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false

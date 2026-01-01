@@ -18,7 +18,7 @@ class CodeLensException extends Exception
     {
         return new self(
             "CodeLens is not enabled for the '{$environment}' environment. " .
-            "Check your configuration to enable it for this environment."
+            "Check your configuration to enable it for this environment.",
         );
     }
 
@@ -29,7 +29,7 @@ class CodeLensException extends Exception
     {
         return new self(
             "No framework adapter has been configured. " .
-            "Please ensure CodeLens is properly installed in your framework."
+            "Please ensure CodeLens is properly installed in your framework.",
         );
     }
 
@@ -41,4 +41,3 @@ class CodeLensException extends Exception
         return new self("Configuration error: {$message}");
     }
 }
-

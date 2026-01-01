@@ -25,8 +25,9 @@ final readonly class ScanResult
         public float $duration,
         public array $errors,
         public FileIndex $fileIndex,
-        public SymbolRegistry $symbolRegistry
-    ) {}
+        public SymbolRegistry $symbolRegistry,
+    ) {
+    }
 
     /**
      * Check if the scan was successful (no errors).
@@ -102,4 +103,3 @@ final readonly class ScanResult
         return $this->fileIndex->getStats();
     }
 }
-

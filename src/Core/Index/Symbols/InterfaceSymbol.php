@@ -21,8 +21,9 @@ final readonly class InterfaceSymbol implements SymbolInterface
         public int $lineEnd,
         public ?string $namespace = null,
         public array $extends = [],
-        public array $methods = []
-    ) {}
+        public array $methods = [],
+    ) {
+    }
 
     public function getName(): string
     {
@@ -81,7 +82,7 @@ final readonly class InterfaceSymbol implements SymbolInterface
             'line_end' => $this->lineEnd,
             'namespace' => $this->namespace,
             'extends' => $this->extends,
-            'methods' => array_map(fn($m) => $m->toArray(), $this->methods),
+            'methods' => array_map(fn ($m) => $m->toArray(), $this->methods),
         ];
     }
 
@@ -95,8 +96,7 @@ final readonly class InterfaceSymbol implements SymbolInterface
             lineEnd: $data['line_end'],
             namespace: $data['namespace'] ?? null,
             extends: $data['extends'] ?? [],
-            methods: array_map(fn($m) => MethodSymbol::fromArray($m), $data['methods'] ?? [])
+            methods: array_map(fn ($m) => MethodSymbol::fromArray($m), $data['methods'] ?? []),
         );
     }
 }
-

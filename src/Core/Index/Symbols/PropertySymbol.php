@@ -18,8 +18,9 @@ final readonly class PropertySymbol implements SymbolInterface
         public ?string $type = null,
         public bool $isStatic = false,
         public bool $isReadonly = false,
-        public bool $hasDefault = false
-    ) {}
+        public bool $hasDefault = false,
+    ) {
+    }
 
     public function getName(): string
     {
@@ -110,8 +111,7 @@ final readonly class PropertySymbol implements SymbolInterface
             type: $data['declared_type'] ?? null,
             isStatic: $data['is_static'] ?? false,
             isReadonly: $data['is_readonly'] ?? false,
-            hasDefault: $data['has_default'] ?? false
+            hasDefault: $data['has_default'] ?? false,
         );
     }
 }
-

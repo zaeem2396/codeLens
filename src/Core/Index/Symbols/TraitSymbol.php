@@ -21,8 +21,9 @@ final readonly class TraitSymbol implements SymbolInterface
         public int $lineEnd,
         public ?string $namespace = null,
         public array $methods = [],
-        public array $properties = []
-    ) {}
+        public array $properties = [],
+    ) {
+    }
 
     public function getName(): string
     {
@@ -80,8 +81,8 @@ final readonly class TraitSymbol implements SymbolInterface
             'line_start' => $this->lineStart,
             'line_end' => $this->lineEnd,
             'namespace' => $this->namespace,
-            'methods' => array_map(fn($m) => $m->toArray(), $this->methods),
-            'properties' => array_map(fn($p) => $p->toArray(), $this->properties),
+            'methods' => array_map(fn ($m) => $m->toArray(), $this->methods),
+            'properties' => array_map(fn ($p) => $p->toArray(), $this->properties),
         ];
     }
 
@@ -94,9 +95,8 @@ final readonly class TraitSymbol implements SymbolInterface
             lineStart: $data['line_start'],
             lineEnd: $data['line_end'],
             namespace: $data['namespace'] ?? null,
-            methods: array_map(fn($m) => MethodSymbol::fromArray($m), $data['methods'] ?? []),
-            properties: array_map(fn($p) => PropertySymbol::fromArray($p), $data['properties'] ?? [])
+            methods: array_map(fn ($m) => MethodSymbol::fromArray($m), $data['methods'] ?? []),
+            properties: array_map(fn ($p) => PropertySymbol::fromArray($p), $data['properties'] ?? []),
         );
     }
 }
-

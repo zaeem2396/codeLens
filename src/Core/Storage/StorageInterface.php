@@ -57,4 +57,3 @@ interface StorageInterface
      */
     public function getPath(): string;
 }
-

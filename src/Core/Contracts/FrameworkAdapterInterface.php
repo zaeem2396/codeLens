@@ -6,7 +6,7 @@ namespace CodeLens\Core\Contracts;
 
 /**
  * Interface for framework-specific adapters.
- * 
+ *
  * Each supported framework (Laravel, Symfony) must implement
  * this interface to integrate with CodeLens.
  */
@@ -64,4 +64,3 @@ interface FrameworkAdapterInterface
      */
     public function getServiceBindings(): array;
 }
-

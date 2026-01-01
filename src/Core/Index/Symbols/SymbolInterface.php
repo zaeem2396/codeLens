@@ -44,4 +44,3 @@ interface SymbolInterface
      */
     public function toArray(): array;
 }
-

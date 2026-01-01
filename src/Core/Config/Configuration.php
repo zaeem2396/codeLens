@@ -6,7 +6,7 @@ namespace CodeLens\Core\Config;
 
 /**
  * Configuration handler for CodeLens.
- * 
+ *
  * Manages all configuration options with sensible defaults
  * and environment-based restrictions.
  */
@@ -18,28 +18,28 @@ final class Configuration
     private const DEFAULTS = [
         // Environments where CodeLens is enabled
         'enabled_environments' => ['local', 'development', 'dev', 'staging'],
-        
+
         // Paths to scan (relative to source path)
         'scan_paths' => ['app', 'src'],
-        
+
         // Paths to exclude from scanning
         'exclude_paths' => ['vendor', 'node_modules', 'storage', 'cache', 'var'],
-        
+
         // File extensions to analyze
         'file_extensions' => ['php'],
-        
+
         // Storage driver: 'json' or 'sqlite'
         'storage_driver' => 'json',
-        
+
         // Cache directory name (relative to storage path)
         'cache_directory' => 'codelens',
-        
+
         // Enable/disable the web UI
         'ui_enabled' => true,
-        
+
         // Route prefix for the web UI
         'ui_route_prefix' => 'codelens',
-        
+
         // Middleware to apply to UI routes
         'ui_middleware' => [],
     ];
@@ -82,7 +82,7 @@ final class Configuration
     public function isEnabledForEnvironment(string $environment): bool
     {
         $enabledEnvironments = $this->get('enabled_environments', []);
-        
+
         return in_array(strtolower($environment), array_map('strtolower', $enabledEnvironments), true);
     }
 
@@ -167,4 +167,3 @@ final class Configuration
         return $this;
     }
 }
-

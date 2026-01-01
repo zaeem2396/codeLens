@@ -9,7 +9,7 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Discovers PHP files in configured paths.
- * 
+ *
  * Respects include/exclude paths and file extensions
  * from the configuration.
  */
@@ -26,7 +26,7 @@ final class FileDiscovery
 
     /**
      * Discover all PHP files based on configuration.
-     * 
+     *
      * @return array<string, FileInfo> Indexed by absolute path
      */
     public function discover(): array
@@ -38,8 +38,8 @@ final class FileDiscovery
 
         foreach ($scanPaths as $scanPath) {
             $absolutePath = $this->resolvePath($scanPath);
-            
-            if (!is_dir($absolutePath)) {
+
+            if (! is_dir($absolutePath)) {
                 continue;
             }
 
@@ -55,7 +55,7 @@ final class FileDiscovery
                     absolutePath: $path,
                     relativePath: $this->getRelativePath($path),
                     size: $file->getSize(),
-                    lastModified: $file->getMTime()
+                    lastModified: $file->getMTime(),
                 );
             }
         }
@@ -65,14 +65,14 @@ final class FileDiscovery
 
     /**
      * Discover files in a specific path.
-     * 
+     *
      * @return array<string, FileInfo>
      */
     public function discoverInPath(string $path): array
     {
         $absolutePath = $this->resolvePath($path);
-        
-        if (!is_dir($absolutePath) && !is_file($absolutePath)) {
+
+        if (! is_dir($absolutePath) && ! is_file($absolutePath)) {
             return [];
         }
 
@@ -82,15 +82,15 @@ final class FileDiscovery
                     absolutePath: $absolutePath,
                     relativePath: $this->getRelativePath($absolutePath),
                     size: filesize($absolutePath) ?: 0,
-                    lastModified: filemtime($absolutePath) ?: 0
-                )
+                    lastModified: filemtime($absolutePath) ?: 0,
+                ),
             ];
         }
 
         $files = [];
         $excludePaths = $this->config->getExcludePaths();
         $extensions = $this->config->getFileExtensions();
-        
+
         $finder = $this->createFinder($absolutePath, $excludePaths, $extensions);
 
         foreach ($finder as $file) {
@@ -103,7 +103,7 @@ final class FileDiscovery
                 absolutePath: $filePath,
                 relativePath: $this->getRelativePath($filePath),
                 size: $file->getSize(),
-                lastModified: $file->getMTime()
+                lastModified: $file->getMTime(),
             );
         }
 
@@ -158,4 +158,3 @@ final class FileDiscovery
         return $absolutePath;
     }
 }
-

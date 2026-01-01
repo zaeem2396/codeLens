@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CodeLens\Adapters\Symfony\DependencyInjection;
 
+use CodeLens\Adapters\Symfony\Command\MetricsCommand;
 use CodeLens\Adapters\Symfony\Command\ScanCommand;
 use CodeLens\Adapters\Symfony\SymfonyAdapter;
 use CodeLens\Core\CodeLens;
@@ -15,7 +16,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Dependency Injection Extension for CodeLens Symfony Bundle.
- * 
+ *
  * Handles the loading and configuration of CodeLens services
  * within the Symfony dependency injection container.
  */
@@ -72,6 +73,15 @@ class CodeLensExtension extends Extension
         ]);
         $scanCommandDefinition->addTag('console.command');
         $container->setDefinition(ScanCommand::class, $scanCommandDefinition);
+
+        // Register MetricsCommand
+        $metricsCommandDefinition = new Definition(MetricsCommand::class);
+        $metricsCommandDefinition->setArguments([
+            new Reference(Configuration::class),
+            new Reference('kernel'),
+        ]);
+        $metricsCommandDefinition->addTag('console.command');
+        $container->setDefinition(MetricsCommand::class, $metricsCommandDefinition);
     }
 
     /**
@@ -82,4 +92,3 @@ class CodeLensExtension extends Extension
         return 'codelens';
     }
 }
-

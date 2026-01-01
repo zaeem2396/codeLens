@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace CodeLens\Core\Scanner;
 
 use CodeLens\Core\Scanner\Visitors\SymbolCollector;
+use PhpParser\Error as ParseError;
 use PhpParser\NodeTraverser;
 use PhpParser\Parser;
 use PhpParser\ParserFactory;
-use PhpParser\Error as ParseError;
+use Throwable;
 
 /**
  * Wrapper around nikic/php-parser for AST parsing.
- * 
+ *
  * Provides a simplified interface for parsing PHP files
  * and extracting symbol information.
  */
@@ -27,13 +28,13 @@ final class AstParser
 
     /**
      * Parse a PHP file and extract symbols.
-     * 
+     *
      * @return ParseResult The parsing result with extracted symbols
      */
     public function parseFile(string $filePath): ParseResult
     {
         $code = @file_get_contents($filePath);
-        
+
         if ($code === false) {
             return ParseResult::error($filePath, 'Could not read file');
         }
@@ -43,14 +44,14 @@ final class AstParser
 
     /**
      * Parse PHP code and extract symbols.
-     * 
+     *
      * @return ParseResult The parsing result with extracted symbols
      */
     public function parseCode(string $code, string $filePath = 'unknown'): ParseResult
     {
         try {
             $ast = $this->parser->parse($code);
-            
+
             if ($ast === null) {
                 return ParseResult::error($filePath, 'Parser returned null');
             }
@@ -64,13 +65,12 @@ final class AstParser
                 filePath: $filePath,
                 symbols: $collector->getSymbols(),
                 namespace: $collector->getNamespace(),
-                useStatements: $collector->getUseStatements()
+                useStatements: $collector->getUseStatements(),
             );
         } catch (ParseError $e) {
             return ParseResult::error($filePath, 'Parse error: ' . $e->getMessage());
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return ParseResult::error($filePath, 'Unexpected error: ' . $e->getMessage());
         }
     }
 }
-

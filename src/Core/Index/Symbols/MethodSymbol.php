@@ -23,8 +23,9 @@ final readonly class MethodSymbol implements SymbolInterface
         public bool $isAbstract = false,
         public bool $isFinal = false,
         public ?string $returnType = null,
-        public array $parameters = []
-    ) {}
+        public array $parameters = [],
+    ) {
+    }
 
     public function getName(): string
     {
@@ -135,8 +136,7 @@ final readonly class MethodSymbol implements SymbolInterface
             isAbstract: $data['is_abstract'] ?? false,
             isFinal: $data['is_final'] ?? false,
             returnType: $data['return_type'] ?? null,
-            parameters: $data['parameters'] ?? []
+            parameters: $data['parameters'] ?? [],
         );
     }
 }
-

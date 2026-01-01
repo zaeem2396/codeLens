@@ -51,3 +51,6 @@ logs/
 # PHPStan
 phpstan.neon.local
 
+# PHP CS Fixer
+.php-cs-fixer.cache
+

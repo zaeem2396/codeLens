@@ -10,6 +10,7 @@ use CodeLens\Core\Index\Symbols\ClassSymbol;
 use CodeLens\Core\Index\Symbols\EnumSymbol;
 use CodeLens\Core\Index\Symbols\InterfaceSymbol;
 use CodeLens\Core\Index\Symbols\TraitSymbol;
+use RuntimeException;
 
 /**
  * JSON file-based storage implementation.
@@ -38,7 +39,7 @@ final class JsonStorage implements StorageInterface
     public function loadFileIndex(): FileIndex
     {
         $data = $this->readJson($this->getFileIndexPath());
-        
+
         if ($data === null) {
             return new FileIndex();
         }
@@ -61,13 +62,13 @@ final class JsonStorage implements StorageInterface
     public function loadSymbolRegistry(): SymbolRegistry
     {
         $data = $this->readJson($this->getSymbolRegistryPath());
-        
+
         if ($data === null) {
             return new SymbolRegistry();
         }
 
         $registry = new SymbolRegistry();
-        
+
         foreach ($data as $symbolData) {
             $symbol = $this->createSymbolFromArray($symbolData);
             if ($symbol !== null) {
@@ -100,7 +101,7 @@ final class JsonStorage implements StorageInterface
      */
     public function hasData(): bool
     {
-        return file_exists($this->getFileIndexPath()) || 
+        return file_exists($this->getFileIndexPath()) ||
                file_exists($this->getSymbolRegistryPath());
     }
 
@@ -159,8 +160,8 @@ final class JsonStorage implements StorageInterface
      */
     private function ensureDirectory(): void
     {
-        if (!is_dir($this->storagePath)) {
-            mkdir($this->storagePath, 0755, true);
+        if (! is_dir($this->storagePath)) {
+            mkdir($this->storagePath, 0o755, true);
         }
     }
 
@@ -170,15 +171,15 @@ final class JsonStorage implements StorageInterface
     private function writeJson(string $path, array $data): void
     {
         $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-        
+
         if ($json === false) {
-            throw new \RuntimeException('Failed to encode JSON: ' . json_last_error_msg());
+            throw new RuntimeException('Failed to encode JSON: ' . json_last_error_msg());
         }
 
         $result = file_put_contents($path, $json, LOCK_EX);
-        
+
         if ($result === false) {
-            throw new \RuntimeException("Failed to write to file: {$path}");
+            throw new RuntimeException("Failed to write to file: {$path}");
         }
     }
 
@@ -187,19 +188,19 @@ final class JsonStorage implements StorageInterface
      */
     private function readJson(string $path): ?array
     {
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             return null;
         }
 
         $content = @file_get_contents($path);
-        
+
         if ($content === false) {
             return null;
         }
 
         $data = json_decode($content, true);
-        
-        if (!is_array($data)) {
+
+        if (! is_array($data)) {
             return null;
         }
 
@@ -222,4 +223,3 @@ final class JsonStorage implements StorageInterface
         };
     }
 }
-

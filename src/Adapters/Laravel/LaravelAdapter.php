@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace CodeLens\Adapters\Laravel;
 
+use Closure;
 use CodeLens\Core\Contracts\FrameworkAdapterInterface;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Routing\Router;
 
 /**
  * Laravel-specific adapter for CodeLens.
- * 
+ *
  * Provides Laravel-specific implementations for
  * framework detection, routing, and service container access.
  */
@@ -89,7 +90,7 @@ class LaravelAdapter implements FrameworkAdapterInterface
 
     /**
      * Get registered routes.
-     * 
+     *
      * Returns an array of route information for usage analysis.
      */
     public function getRoutes(): array
@@ -100,7 +101,7 @@ class LaravelAdapter implements FrameworkAdapterInterface
 
         foreach ($router->getRoutes() as $route) {
             $action = $route->getAction();
-            
+
             $routes[] = [
                 'uri' => $route->uri(),
                 'methods' => $route->methods(),
@@ -116,7 +117,7 @@ class LaravelAdapter implements FrameworkAdapterInterface
 
     /**
      * Get service container bindings.
-     * 
+     *
      * Returns an array of service binding information.
      */
     public function getServiceBindings(): array
@@ -149,11 +150,10 @@ class LaravelAdapter implements FrameworkAdapterInterface
             return $concrete;
         }
 
-        if ($concrete instanceof \Closure) {
+        if ($concrete instanceof Closure) {
             return 'Closure';
         }
 
         return get_class($concrete);
     }
 }
-

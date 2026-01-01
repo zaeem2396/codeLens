@@ -24,8 +24,9 @@ final readonly class EnumSymbol implements SymbolInterface
         public array $implements = [],
         public array $cases = [],
         public array $methods = [],
-        public ?string $scalarType = null
-    ) {}
+        public ?string $scalarType = null,
+    ) {
+    }
 
     public function getName(): string
     {
@@ -93,7 +94,7 @@ final readonly class EnumSymbol implements SymbolInterface
             'namespace' => $this->namespace,
             'implements' => $this->implements,
             'cases' => $this->cases,
-            'methods' => array_map(fn($m) => $m->toArray(), $this->methods),
+            'methods' => array_map(fn ($m) => $m->toArray(), $this->methods),
             'scalar_type' => $this->scalarType,
         ];
     }
@@ -109,9 +110,8 @@ final readonly class EnumSymbol implements SymbolInterface
             namespace: $data['namespace'] ?? null,
             implements: $data['implements'] ?? [],
             cases: $data['cases'] ?? [],
-            methods: array_map(fn($m) => MethodSymbol::fromArray($m), $data['methods'] ?? []),
-            scalarType: $data['scalar_type'] ?? null
+            methods: array_map(fn ($m) => MethodSymbol::fromArray($m), $data['methods'] ?? []),
+            scalarType: $data['scalar_type'] ?? null,
         );
     }
 }
-

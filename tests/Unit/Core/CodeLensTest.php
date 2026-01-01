@@ -39,7 +39,7 @@ class CodeLensTest extends TestCase
     {
         $adapter = $this->createMockAdapter('local');
         $config = new Configuration(['enabled_environments' => ['local']]);
-        
+
         $instance = CodeLens::getInstance($config);
         $instance->initialize($adapter);
 
@@ -51,7 +51,7 @@ class CodeLensTest extends TestCase
     {
         $adapter = $this->createMockAdapter('production');
         $config = new Configuration(['enabled_environments' => ['local']]);
-        
+
         $instance = CodeLens::getInstance($config);
         $instance->initialize($adapter);
 
@@ -63,7 +63,7 @@ class CodeLensTest extends TestCase
     {
         $adapter = $this->createMockAdapter('local', 'TestFramework', '1.0.0');
         $config = new Configuration(['enabled_environments' => ['local']]);
-        
+
         $instance = CodeLens::getInstance($config);
         $instance->initialize($adapter);
 
@@ -92,10 +92,10 @@ class CodeLensTest extends TestCase
     private function createMockAdapter(
         string $environment,
         string $name = 'TestFramework',
-        string $version = '1.0.0'
+        string $version = '1.0.0',
     ): FrameworkAdapterInterface {
         $adapter = $this->createMock(FrameworkAdapterInterface::class);
-        
+
         $adapter->method('getCurrentEnvironment')->willReturn($environment);
         $adapter->method('getFrameworkName')->willReturn($name);
         $adapter->method('getFrameworkVersion')->willReturn($version);
@@ -109,4 +109,3 @@ class CodeLensTest extends TestCase
         return $adapter;
     }
 }
-

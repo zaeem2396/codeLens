@@ -15,7 +15,7 @@ use PDO;
 
 /**
  * SQLite-based storage implementation.
- * 
+ *
  * Provides faster lookups for large codebases.
  */
 final class SqliteStorage implements StorageInterface
@@ -34,7 +34,7 @@ final class SqliteStorage implements StorageInterface
     public function saveFileIndex(FileIndex $index): void
     {
         $pdo = $this->getConnection();
-        
+
         // Clear existing data
         $pdo->exec('DELETE FROM files');
 
@@ -64,7 +64,7 @@ final class SqliteStorage implements StorageInterface
         $index = new FileIndex();
 
         $stmt = $pdo->query('SELECT * FROM files');
-        
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $index->add(new FileInfo(
                 absolutePath: $row['path'],
@@ -72,7 +72,7 @@ final class SqliteStorage implements StorageInterface
                 size: (int) $row['size'],
                 lastModified: (int) $row['last_modified'],
                 checksum: $row['checksum'],
-                lineCount: $row['line_count'] !== null ? (int) $row['line_count'] : null
+                lineCount: $row['line_count'] !== null ? (int) $row['line_count'] : null,
             ));
         }
 
@@ -85,7 +85,7 @@ final class SqliteStorage implements StorageInterface
     public function saveSymbolRegistry(SymbolRegistry $registry): void
     {
         $pdo = $this->getConnection();
-        
+
         // Clear existing data
         $pdo->exec('DELETE FROM symbols');
 
@@ -97,7 +97,7 @@ final class SqliteStorage implements StorageInterface
         foreach ($registry->all() as $symbol) {
             $data = $symbol->toArray();
             $namespace = null;
-            
+
             if ($symbol instanceof ClassSymbol ||
                 $symbol instanceof InterfaceSymbol ||
                 $symbol instanceof TraitSymbol ||
@@ -127,11 +127,11 @@ final class SqliteStorage implements StorageInterface
         $registry = new SymbolRegistry();
 
         $stmt = $pdo->query('SELECT * FROM symbols');
-        
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $data = json_decode($row['data'], true);
             $symbol = $this->createSymbolFromArray($data);
-            
+
             if ($symbol !== null) {
                 $registry->register($symbol);
             }
@@ -146,11 +146,11 @@ final class SqliteStorage implements StorageInterface
     public function saveScanMetadata(array $metadata): void
     {
         $pdo = $this->getConnection();
-        
+
         $pdo->exec('DELETE FROM metadata');
-        
+
         $stmt = $pdo->prepare('INSERT INTO metadata (key, value) VALUES (:key, :value)');
-        
+
         foreach ($metadata as $key => $value) {
             $stmt->execute([
                 'key' => $key,
@@ -168,7 +168,7 @@ final class SqliteStorage implements StorageInterface
         $metadata = [];
 
         $stmt = $pdo->query('SELECT key, value FROM metadata');
-        
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $value = $row['value'];
             $decoded = json_decode($value, true);
@@ -183,13 +183,13 @@ final class SqliteStorage implements StorageInterface
      */
     public function hasData(): bool
     {
-        if (!file_exists($this->getDatabasePath())) {
+        if (! file_exists($this->getDatabasePath())) {
             return false;
         }
 
         $pdo = $this->getConnection();
         $stmt = $pdo->query('SELECT COUNT(*) FROM files');
-        
+
         return (int) $stmt->fetchColumn() > 0;
     }
 
@@ -199,7 +199,7 @@ final class SqliteStorage implements StorageInterface
     public function clear(): void
     {
         $dbPath = $this->getDatabasePath();
-        
+
         if (file_exists($dbPath)) {
             $this->pdo = null;
             @unlink($dbPath);
@@ -232,10 +232,10 @@ final class SqliteStorage implements StorageInterface
         }
 
         $this->ensureDirectory();
-        
+
         $this->pdo = new PDO('sqlite:' . $this->getDatabasePath());
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
+
         $this->initializeSchema();
 
         return $this->pdo;
@@ -246,8 +246,8 @@ final class SqliteStorage implements StorageInterface
      */
     private function ensureDirectory(): void
     {
-        if (!is_dir($this->storagePath)) {
-            mkdir($this->storagePath, 0755, true);
+        if (! is_dir($this->storagePath)) {
+            mkdir($this->storagePath, 0o755, true);
         }
     }
 
@@ -309,4 +309,3 @@ final class SqliteStorage implements StorageInterface
         };
     }
 }
-

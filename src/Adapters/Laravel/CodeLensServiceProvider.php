@@ -10,7 +10,7 @@ use Illuminate\Support\ServiceProvider;
 
 /**
  * Laravel Service Provider for CodeLens.
- * 
+ *
  * Integrates CodeLens with Laravel applications,
  * providing automatic configuration and registration.
  */
@@ -23,7 +23,7 @@ class CodeLensServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(
             __DIR__ . '/config/codelens.php',
-            'codelens'
+            'codelens',
         );
 
         $this->app->singleton(Configuration::class, function ($app) {
@@ -37,7 +37,7 @@ class CodeLensServiceProvider extends ServiceProvider
         $this->app->singleton(CodeLens::class, function ($app) {
             $configuration = $app->make(Configuration::class);
             $adapter = $app->make(LaravelAdapter::class);
-            
+
             return CodeLens::getInstance($configuration)->initialize($adapter);
         });
 
@@ -56,8 +56,8 @@ class CodeLensServiceProvider extends ServiceProvider
 
         // Only proceed if CodeLens is enabled for this environment
         $codeLens = $this->app->make(CodeLens::class);
-        
-        if (!$codeLens->isEnabled()) {
+
+        if (! $codeLens->isEnabled()) {
             return;
         }
 
@@ -82,6 +82,7 @@ class CodeLensServiceProvider extends ServiceProvider
     {
         $this->commands([
             Commands\ScanCommand::class,
+            Commands\MetricsCommand::class,
         ]);
     }
 
@@ -98,4 +99,3 @@ class CodeLensServiceProvider extends ServiceProvider
         ];
     }
 }
-

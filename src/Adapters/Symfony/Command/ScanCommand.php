@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 #[AsCommand(
     name: 'codelens:scan',
-    description: 'Scan the codebase and build the symbol index'
+    description: 'Scan the codebase and build the symbol index',
 )]
 class ScanCommand extends Command
 {
@@ -57,7 +57,7 @@ class ScanCommand extends Command
 
         $basePath = $this->kernel->getProjectDir();
         $storagePath = $this->kernel->getCacheDir();
-        
+
         $storage = StorageFactory::create($this->config, $storagePath);
 
         if ($fresh) {
@@ -127,7 +127,7 @@ class ScanCommand extends Command
         // Errors
         if ($result->hasErrors()) {
             $io->warning("{$result->getErrorCount()} file(s) had parse errors:");
-            
+
             $errors = array_slice($result->errors, 0, 10);
             foreach ($errors as $file => $error) {
                 $shortPath = str_replace($this->kernel->getProjectDir() . '/', '', $file);
@@ -150,4 +150,3 @@ class ScanCommand extends Command
         }
     }
 }
-

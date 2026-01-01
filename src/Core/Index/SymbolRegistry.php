@@ -12,7 +12,7 @@ use CodeLens\Core\Index\Symbols\TraitSymbol;
 
 /**
  * Registry of all symbols in the codebase.
- * 
+ *
  * Stores and indexes classes, interfaces, traits, and enums
  * for quick lookup by FQN or namespace.
  */
@@ -46,14 +46,14 @@ final class SymbolRegistry
 
         // Index by file
         $file = $symbol->getFile();
-        if (!isset($this->fileIndex[$file])) {
+        if (! isset($this->fileIndex[$file])) {
             $this->fileIndex[$file] = [];
         }
         $this->fileIndex[$file][] = $fqn;
 
         // Index by type
         $type = $symbol->getType();
-        if (!isset($this->typeIndex[$type])) {
+        if (! isset($this->typeIndex[$type])) {
             $this->typeIndex[$type] = [];
         }
         $this->typeIndex[$type][] = $fqn;
@@ -61,7 +61,7 @@ final class SymbolRegistry
         // Index by namespace
         $namespace = $this->extractNamespace($symbol);
         if ($namespace !== null) {
-            if (!isset($this->namespaceIndex[$namespace])) {
+            if (! isset($this->namespaceIndex[$namespace])) {
                 $this->namespaceIndex[$namespace] = [];
             }
             $this->namespaceIndex[$namespace][] = $fqn;
@@ -89,7 +89,7 @@ final class SymbolRegistry
      */
     public function remove(string $fqn): void
     {
-        if (!isset($this->symbols[$fqn])) {
+        if (! isset($this->symbols[$fqn])) {
             return;
         }
 
@@ -101,7 +101,7 @@ final class SymbolRegistry
         if (isset($this->fileIndex[$file])) {
             $this->fileIndex[$file] = array_filter(
                 $this->fileIndex[$file],
-                fn($f) => $f !== $fqn
+                fn ($f) => $f !== $fqn,
             );
         }
 
@@ -110,7 +110,7 @@ final class SymbolRegistry
         if (isset($this->typeIndex[$type])) {
             $this->typeIndex[$type] = array_filter(
                 $this->typeIndex[$type],
-                fn($f) => $f !== $fqn
+                fn ($f) => $f !== $fqn,
             );
         }
 
@@ -119,7 +119,7 @@ final class SymbolRegistry
         if ($namespace !== null && isset($this->namespaceIndex[$namespace])) {
             $this->namespaceIndex[$namespace] = array_filter(
                 $this->namespaceIndex[$namespace],
-                fn($f) => $f !== $fqn
+                fn ($f) => $f !== $fqn,
             );
         }
     }
@@ -129,7 +129,7 @@ final class SymbolRegistry
      */
     public function removeByFile(string $file): void
     {
-        if (!isset($this->fileIndex[$file])) {
+        if (! isset($this->fileIndex[$file])) {
             return;
         }
 
@@ -140,7 +140,7 @@ final class SymbolRegistry
 
     /**
      * Get all symbols.
-     * 
+     *
      * @return array<string, SymbolInterface>
      */
     public function all(): array
@@ -150,8 +150,8 @@ final class SymbolRegistry
 
     /**
      * Get all class symbols.
-     * 
-     * @return array<ClassSymbol>
+     *
+     * @return array<SymbolInterface>
      */
     public function getClasses(): array
     {
@@ -160,8 +160,8 @@ final class SymbolRegistry
 
     /**
      * Get all interface symbols.
-     * 
-     * @return array<InterfaceSymbol>
+     *
+     * @return array<SymbolInterface>
      */
     public function getInterfaces(): array
     {
@@ -170,8 +170,8 @@ final class SymbolRegistry
 
     /**
      * Get all trait symbols.
-     * 
-     * @return array<TraitSymbol>
+     *
+     * @return array<SymbolInterface>
      */
     public function getTraits(): array
     {
@@ -180,8 +180,8 @@ final class SymbolRegistry
 
     /**
      * Get all enum symbols.
-     * 
-     * @return array<EnumSymbol>
+     *
+     * @return array<SymbolInterface>
      */
     public function getEnums(): array
     {
@@ -190,58 +190,58 @@ final class SymbolRegistry
 
     /**
      * Get symbols by type.
-     * 
+     *
      * @return array<SymbolInterface>
      */
     public function getByType(string $type): array
     {
-        if (!isset($this->typeIndex[$type])) {
+        if (! isset($this->typeIndex[$type])) {
             return [];
         }
 
         return array_filter(
-            array_map(fn($fqn) => $this->symbols[$fqn] ?? null, $this->typeIndex[$type]),
-            fn($s) => $s !== null
+            array_map(fn ($fqn) => $this->symbols[$fqn] ?? null, $this->typeIndex[$type]),
+            fn ($s) => $s !== null,
         );
     }
 
     /**
      * Get symbols by file.
-     * 
+     *
      * @return array<SymbolInterface>
      */
     public function getByFile(string $file): array
     {
-        if (!isset($this->fileIndex[$file])) {
+        if (! isset($this->fileIndex[$file])) {
             return [];
         }
 
         return array_filter(
-            array_map(fn($fqn) => $this->symbols[$fqn] ?? null, $this->fileIndex[$file]),
-            fn($s) => $s !== null
+            array_map(fn ($fqn) => $this->symbols[$fqn] ?? null, $this->fileIndex[$file]),
+            fn ($s) => $s !== null,
         );
     }
 
     /**
      * Get symbols by namespace.
-     * 
+     *
      * @return array<SymbolInterface>
      */
     public function getByNamespace(string $namespace): array
     {
-        if (!isset($this->namespaceIndex[$namespace])) {
+        if (! isset($this->namespaceIndex[$namespace])) {
             return [];
         }
 
         return array_filter(
-            array_map(fn($fqn) => $this->symbols[$fqn] ?? null, $this->namespaceIndex[$namespace]),
-            fn($s) => $s !== null
+            array_map(fn ($fqn) => $this->symbols[$fqn] ?? null, $this->namespaceIndex[$namespace]),
+            fn ($s) => $s !== null,
         );
     }
 
     /**
      * Get all namespaces.
-     * 
+     *
      * @return array<string>
      */
     public function getNamespaces(): array
@@ -304,4 +304,3 @@ final class SymbolRegistry
         return null;
     }
 }
-

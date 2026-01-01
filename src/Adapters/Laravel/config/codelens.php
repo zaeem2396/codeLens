@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -85,4 +87,3 @@ return [
     'ui_route_prefix' => 'codelens',
     'ui_middleware' => ['web'],
 ];
-
