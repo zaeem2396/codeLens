@@ -77,7 +77,7 @@ CodeLens is being developed in independent, releasable phases:
 |-------|------|--------|
 | 0 | Foundation & Identity | ✅ Complete |
 | 1 | Code Scanning & Indexing | ✅ Complete |
-| 2 | Metrics (Facts, Not Judgments) | 🔲 Planned |
+| 2 | Metrics (Facts, Not Judgments) | ✅ Complete |
 | 3 | Heuristic Flags (Soft Signals) | 🔲 Planned |
 | 4 | Usage Probability (Static Only) | 🔲 Planned |
 | 5 | Risk Scoring (Explainable) | 🔲 Planned |
@@ -132,6 +132,24 @@ php bin/console codelens:scan --path=src
 
 ---
 
+## 📊 Viewing Metrics
+
+Display codebase metrics (lines of code, classes, methods, nesting depth):
+
+```bash
+# Laravel
+php artisan codelens:metrics           # Full analysis
+php artisan codelens:metrics --path=app  # Specific path
+php artisan codelens:metrics --json    # JSON output
+
+# Symfony
+php bin/console codelens:metrics
+php bin/console codelens:metrics --path=src
+php bin/console codelens:metrics --json
+```
+
+---
+
 ## 🏗️ Architecture
 
 ```
@@ -141,6 +159,7 @@ src/
 │   ├── Config/                    # Configuration handling
 │   ├── Scanner/                   # File discovery & AST parsing
 │   ├── Index/                     # Symbol registry & file index
+│   ├── Metrics/                   # Code metrics calculation
 │   ├── Storage/                   # JSON & SQLite backends
 │   ├── Contracts/                 # Interfaces
 │   └── Exceptions/                # Exception classes
