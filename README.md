@@ -78,7 +78,7 @@ CodeLens is being developed in independent, releasable phases:
 | 0 | Foundation & Identity | ✅ Complete |
 | 1 | Code Scanning & Indexing | ✅ Complete |
 | 2 | Metrics (Facts, Not Judgments) | ✅ Complete |
-| 3 | Heuristic Flags (Soft Signals) | 🔲 Planned |
+| 3 | Heuristic Flags (Soft Signals) | ✅ Complete |
 | 4 | Usage Probability (Static Only) | 🔲 Planned |
 | 5 | Risk Scoring (Explainable) | 🔲 Planned |
 | 6 | UI Maturity & Navigation | 🔲 Planned |
@@ -150,6 +150,38 @@ php bin/console codelens:metrics --json
 
 ---
 
+## 🚩 Heuristic Analysis
+
+Analyze codebase with soft heuristic rules:
+
+```bash
+# Laravel
+php artisan codelens:analyze           # Full analysis
+php artisan codelens:analyze --level=attention  # Only attention-level flags
+php artisan codelens:analyze --rule=long_method  # Specific rule
+php artisan codelens:analyze --json    # JSON output
+
+# Symfony
+php bin/console codelens:analyze
+php bin/console codelens:analyze --level=attention
+php bin/console codelens:analyze --rule=long_method
+php bin/console codelens:analyze --json
+```
+
+### Available Rules
+
+| Rule ID | Description |
+|---------|-------------|
+| `long_method` | Identifies methods with many lines |
+| `deep_nesting` | Detects deeply nested control structures |
+| `many_parameters` | Methods with many parameters |
+| `high_conditionals` | Many conditional statements |
+| `large_file` | Files with many lines |
+| `multiple_classes` | Multiple classes in one file |
+| `many_returns` | Many return statements |
+
+---
+
 ## 🏗️ Architecture
 
 ```
@@ -160,6 +192,7 @@ src/
 │   ├── Scanner/                   # File discovery & AST parsing
 │   ├── Index/                     # Symbol registry & file index
 │   ├── Metrics/                   # Code metrics calculation
+│   ├── Heuristics/                # Heuristic flags & rules
 │   ├── Storage/                   # JSON & SQLite backends
 │   ├── Contracts/                 # Interfaces
 │   └── Exceptions/                # Exception classes

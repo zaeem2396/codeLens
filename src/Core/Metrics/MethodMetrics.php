@@ -29,6 +29,54 @@ final readonly class MethodMetrics
     }
 
     /**
+     * Get method name.
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get line count.
+     */
+    public function getLines(): int
+    {
+        return $this->lineCount;
+    }
+
+    /**
+     * Get max nesting depth.
+     */
+    public function getMaxNestingDepth(): int
+    {
+        return $this->maxNestingDepth;
+    }
+
+    /**
+     * Get parameter count.
+     */
+    public function getParameterCount(): int
+    {
+        return $this->parameterCount;
+    }
+
+    /**
+     * Get conditional count.
+     */
+    public function getConditionalCount(): int
+    {
+        return $this->conditionalCount;
+    }
+
+    /**
+     * Get return count.
+     */
+    public function getReturnCount(): int
+    {
+        return $this->returnCount;
+    }
+
+    /**
      * Convert to array for storage/display.
      */
     public function toArray(): array

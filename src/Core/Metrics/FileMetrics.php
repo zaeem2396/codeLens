@@ -32,6 +32,40 @@ final readonly class FileMetrics
     }
 
     /**
+     * Get file path.
+     */
+    public function getPath(): string
+    {
+        return $this->filePath;
+    }
+
+    /**
+     * Get lines of code.
+     */
+    public function getLines(): int
+    {
+        return $this->linesOfCode;
+    }
+
+    /**
+     * Get class count.
+     */
+    public function getClassCount(): int
+    {
+        return $this->classCount;
+    }
+
+    /**
+     * Get method metrics.
+     *
+     * @return array<MethodMetrics>
+     */
+    public function getMethodMetrics(): array
+    {
+        return $this->methodMetrics;
+    }
+
+    /**
      * Get total symbol count.
      */
     public function getTotalSymbolCount(): int

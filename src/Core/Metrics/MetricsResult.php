@@ -21,6 +21,16 @@ final readonly class MetricsResult
     }
 
     /**
+     * Get all file metrics.
+     *
+     * @return array<FileMetrics>
+     */
+    public function getFileMetrics(): array
+    {
+        return $this->fileMetrics;
+    }
+
+    /**
      * Get file count.
      */
     public function getFileCount(): int
