@@ -7,21 +7,21 @@ namespace CodeLens\Core\Index\Symbols;
 /**
  * Represents an interface in the codebase.
  */
-final readonly class InterfaceSymbol implements SymbolInterface
+final class InterfaceSymbol implements SymbolInterface
 {
     /**
      * @param array<string> $extends
      * @param array<MethodSymbol> $methods
      */
     public function __construct(
-        public string $name,
-        public string $fqn,
-        public string $file,
-        public int $lineStart,
-        public int $lineEnd,
-        public ?string $namespace = null,
-        public array $extends = [],
-        public array $methods = [],
+        public readonly string $name,
+        public readonly string $fqn,
+        public readonly string $file,
+        public readonly int $lineStart,
+        public readonly int $lineEnd,
+        public readonly ?string $namespace = null,
+        public readonly array $extends = [],
+        public readonly array $methods = [],
     ) {
     }
 

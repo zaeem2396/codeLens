@@ -199,3 +199,5 @@ class HeuristicResultTest extends TestCase
         $this->assertEquals('long_method', $array['flags'][0]['rule_id']);
     }
 }
+
+

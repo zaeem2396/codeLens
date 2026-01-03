@@ -7,21 +7,21 @@ namespace CodeLens\Core\Index\Symbols;
 /**
  * Represents a trait in the codebase.
  */
-final readonly class TraitSymbol implements SymbolInterface
+final class TraitSymbol implements SymbolInterface
 {
     /**
      * @param array<MethodSymbol> $methods
      * @param array<PropertySymbol> $properties
      */
     public function __construct(
-        public string $name,
-        public string $fqn,
-        public string $file,
-        public int $lineStart,
-        public int $lineEnd,
-        public ?string $namespace = null,
-        public array $methods = [],
-        public array $properties = [],
+        public readonly string $name,
+        public readonly string $fqn,
+        public readonly string $file,
+        public readonly int $lineStart,
+        public readonly int $lineEnd,
+        public readonly ?string $namespace = null,
+        public readonly array $methods = [],
+        public readonly array $properties = [],
     ) {
     }
 

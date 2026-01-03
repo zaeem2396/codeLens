@@ -239,3 +239,5 @@ class HeuristicEngineTest extends TestCase
         $this->assertEmpty($result->getFlagsByRule('long_method'));
     }
 }
+
+

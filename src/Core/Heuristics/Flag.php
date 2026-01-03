@@ -14,18 +14,18 @@ namespace CodeLens\Core\Heuristics;
  * - An explanation of why it matters
  * - Soft, non-judgmental language
  */
-final readonly class Flag
+final class Flag
 {
     public function __construct(
-        public string $ruleId,
-        public string $ruleName,
-        public FlagLevel $level,
-        public string $target,
-        public string $targetType,
-        public mixed $value,
-        public mixed $threshold,
-        public string $message,
-        public string $reasoning,
+        public readonly string $ruleId,
+        public readonly string $ruleName,
+        public readonly FlagLevel $level,
+        public readonly string $target,
+        public readonly string $targetType,
+        public readonly mixed $value,
+        public readonly mixed $threshold,
+        public readonly string $message,
+        public readonly string $reasoning,
     ) {
     }
 

@@ -9,14 +9,14 @@ namespace CodeLens\Core\Metrics;
  *
  * Contains raw numerical summaries without judgments.
  */
-final readonly class MetricsResult
+final class MetricsResult
 {
     /**
      * @param array<FileMetrics> $fileMetrics
      */
     public function __construct(
-        public array $fileMetrics,
-        public float $duration,
+        public readonly array $fileMetrics,
+        public readonly float $duration,
     ) {
     }
 

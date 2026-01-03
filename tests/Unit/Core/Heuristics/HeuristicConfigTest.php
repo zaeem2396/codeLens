@@ -129,3 +129,5 @@ class HeuristicConfigTest extends TestCase
         $this->assertEquals(30, $config->getThreshold('method_lines_mild'));
     }
 }
+
+
