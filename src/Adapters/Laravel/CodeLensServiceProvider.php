@@ -84,6 +84,7 @@ class CodeLensServiceProvider extends ServiceProvider
             Commands\ScanCommand::class,
             Commands\MetricsCommand::class,
             Commands\AnalyzeCommand::class,
+            Commands\UsageCommand::class,
         ]);
     }
 
