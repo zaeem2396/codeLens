@@ -446,5 +446,3 @@ class RulesTest extends TestCase
         $this->assertEquals(FlagLevel::Mild, $flags2[0]->level);
     }
 }
-
-

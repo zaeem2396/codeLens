@@ -50,5 +50,3 @@ class FlagLevelTest extends TestCase
         $this->assertNull(FlagLevel::tryFrom('invalid'));
     }
 }
-
-
