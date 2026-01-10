@@ -31,7 +31,7 @@ class ResolversTest extends TestCase
             'B::m',
             CallType::MethodCall,
             '/test.php',
-            10
+            10,
         );
 
         $this->assertTrue($resolver->canResolve($ref));
@@ -45,7 +45,7 @@ class ResolversTest extends TestCase
             'B::m',
             CallType::StaticCall,
             '/test.php',
-            10
+            10,
         );
 
         $this->assertTrue($resolver->canResolve($ref));
@@ -59,7 +59,7 @@ class ResolversTest extends TestCase
             'some_function',
             CallType::FunctionCall,
             '/test.php',
-            10
+            10,
         );
 
         $this->assertFalse($resolver->canResolve($ref));
@@ -75,7 +75,7 @@ class ResolversTest extends TestCase
             '(unresolved)::method',
             CallType::MethodCall,
             '/test.php',
-            10
+            10,
         );
 
         $resolved = $resolver->resolve($ref, $registry);
@@ -93,7 +93,7 @@ class ResolversTest extends TestCase
             fqn: 'App\\Service\\UserService',
             file: '/test.php',
             lineStart: 1,
-            lineEnd: 50
+            lineEnd: 50,
         );
         $registry->register($class);
 
@@ -103,7 +103,7 @@ class ResolversTest extends TestCase
             CallType::NewInstance,
             '/test.php',
             10,
-            0.5 // Lower initial confidence
+            0.5, // Lower initial confidence
         );
 
         $resolved = $resolver->resolve($ref, $registry);
@@ -122,7 +122,7 @@ class ResolversTest extends TestCase
             CallType::NewInstance,
             '/test.php',
             10,
-            0.5
+            0.5,
         );
 
         $resolved = $resolver->resolve($ref, $registry);
@@ -143,7 +143,7 @@ class ResolversTest extends TestCase
             'SomeClass',
             CallType::NewInstance,
             '/test.php',
-            10
+            10,
         );
 
         $this->assertTrue($resolver->canResolve($ref));
@@ -157,7 +157,7 @@ class ResolversTest extends TestCase
             'B::m',
             CallType::MethodCall,
             '/test.php',
-            10
+            10,
         );
 
         $this->assertFalse($resolver->canResolve($ref));
@@ -178,7 +178,7 @@ class ResolversTest extends TestCase
                 ['name' => '$userRepo', 'type' => 'App\\Repository\\UserRepository'],
                 ['name' => '$logger', 'type' => 'Psr\\Log\\LoggerInterface'],
                 ['name' => '$debug', 'type' => 'bool'],
-            ]
+            ],
         );
 
         $class = new ClassSymbol(
@@ -187,7 +187,7 @@ class ResolversTest extends TestCase
             file: '/test.php',
             lineStart: 1,
             lineEnd: 50,
-            methods: [$constructor]
+            methods: [$constructor],
         );
         $registry->register($class);
 
@@ -196,7 +196,7 @@ class ResolversTest extends TestCase
             'App\\Service',
             CallType::NewInstance,
             '/test.php',
-            10
+            10,
         );
 
         $resolved = $resolver->resolve($ref, $registry);
@@ -217,7 +217,7 @@ class ResolversTest extends TestCase
             'B::m',
             CallType::MethodCall,
             '/test.php',
-            10
+            10,
         );
 
         $this->assertTrue($resolver->canResolve($ref));
@@ -231,7 +231,7 @@ class ResolversTest extends TestCase
             'SomeClass',
             CallType::NewInstance,
             '/test.php',
-            10
+            10,
         );
 
         $this->assertFalse($resolver->canResolve($ref));
@@ -248,7 +248,7 @@ class ResolversTest extends TestCase
             fqn: 'App\\Repository\\UserRepositoryInterface',
             file: '/test.php',
             lineStart: 1,
-            lineEnd: 10
+            lineEnd: 10,
         );
         $registry->register($interface);
 
@@ -259,7 +259,7 @@ class ResolversTest extends TestCase
             file: '/test.php',
             lineStart: 15,
             lineEnd: 100,
-            implements: ['App\\Repository\\UserRepositoryInterface']
+            implements: ['App\\Repository\\UserRepositoryInterface'],
         );
         $registry->register($class);
 
@@ -268,7 +268,7 @@ class ResolversTest extends TestCase
             'App\\Repository\\UserRepositoryInterface::findById',
             CallType::MethodCall,
             '/test.php',
-            10
+            10,
         );
 
         $resolved = $resolver->resolve($ref, $registry);
@@ -277,7 +277,7 @@ class ResolversTest extends TestCase
         $this->assertTrue($resolved->context['is_interface'] ?? false);
         $this->assertContains(
             'App\\Repository\\EloquentUserRepository',
-            $resolved->context['implementations']
+            $resolved->context['implementations'],
         );
     }
 
@@ -292,7 +292,7 @@ class ResolversTest extends TestCase
             fqn: 'App\\RepositoryInterface',
             file: '/test.php',
             lineStart: 1,
-            lineEnd: 10
+            lineEnd: 10,
         );
         $registry->register($interface);
 
@@ -303,7 +303,7 @@ class ResolversTest extends TestCase
             file: '/test.php',
             lineStart: 15,
             lineEnd: 50,
-            implements: ['App\\RepositoryInterface']
+            implements: ['App\\RepositoryInterface'],
         );
         $class2 = new ClassSymbol(
             name: 'PostRepo',
@@ -311,7 +311,7 @@ class ResolversTest extends TestCase
             file: '/test.php',
             lineStart: 55,
             lineEnd: 100,
-            implements: ['App\\RepositoryInterface']
+            implements: ['App\\RepositoryInterface'],
         );
         $registry->register($class1);
         $registry->register($class2);
@@ -334,7 +334,7 @@ class ResolversTest extends TestCase
             '(closure)',
             CallType::Closure,
             '/test.php',
-            10
+            10,
         );
 
         $this->assertTrue($resolver->canResolve($ref));
@@ -348,7 +348,7 @@ class ResolversTest extends TestCase
             'B::m',
             CallType::MethodCall,
             '/test.php',
-            10
+            10,
         );
 
         $this->assertFalse($resolver->canResolve($ref));
@@ -366,7 +366,7 @@ class ResolversTest extends TestCase
             '/test.php',
             10,
             0.7,
-            ['uses' => ['$this', '$userService', '$config']]
+            ['uses' => ['$this', '$userService', '$config']],
         );
 
         $resolved = $resolver->resolve($ref, $registry);
@@ -388,7 +388,7 @@ class ResolversTest extends TestCase
             '/test.php',
             10,
             0.7,
-            ['uses' => []]
+            ['uses' => []],
         );
 
         $resolved = $resolver->resolve($ref, $registry);
@@ -408,7 +408,7 @@ class ResolversTest extends TestCase
             'Cache::get',
             CallType::StaticCall,
             '/test.php',
-            10
+            10,
         );
 
         $this->assertTrue($resolver->canResolve($ref));
@@ -424,7 +424,7 @@ class ResolversTest extends TestCase
             'Cache::get',
             CallType::StaticCall,
             '/test.php',
-            10
+            10,
         );
 
         $resolved = $resolver->resolve($ref, $registry);
@@ -443,7 +443,7 @@ class ResolversTest extends TestCase
             'cache',
             CallType::FunctionCall,
             '/test.php',
-            10
+            10,
         );
 
         $resolved = $resolver->resolve($ref, $registry);
@@ -520,4 +520,3 @@ class ResolversTest extends TestCase
         $this->assertSame('Framework Resolver', (new FrameworkResolver())->getName());
     }
 }
-

@@ -190,4 +190,3 @@ final class InterfaceResolver implements ResolverInterface
         return $map;
     }
 }
-

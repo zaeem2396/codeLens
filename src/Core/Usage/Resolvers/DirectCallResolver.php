@@ -171,4 +171,3 @@ final class DirectCallResolver implements ResolverInterface
         return false;
     }
 }
-

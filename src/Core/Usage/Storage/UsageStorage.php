@@ -520,4 +520,3 @@ final class UsageStorage
         $this->pdo->exec('CREATE INDEX IF NOT EXISTS idx_confidence ON call_references(confidence)');
     }
 }
-

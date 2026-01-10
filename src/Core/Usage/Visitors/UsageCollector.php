@@ -545,4 +545,3 @@ final class UsageCollector extends NodeVisitorAbstract
         return in_array(strtolower($name), $builtIns, true);
     }
 }
-

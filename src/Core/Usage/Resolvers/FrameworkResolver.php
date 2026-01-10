@@ -336,4 +336,3 @@ function class_basename(string $class): string
 
     return end($parts);
 }
-

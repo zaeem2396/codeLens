@@ -169,4 +169,3 @@ final class ClosureResolver implements ResolverInterface
         ];
     }
 }
-

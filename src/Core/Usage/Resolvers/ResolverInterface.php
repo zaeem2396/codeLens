@@ -43,4 +43,3 @@ interface ResolverInterface
      */
     public function getPriority(): int;
 }
-

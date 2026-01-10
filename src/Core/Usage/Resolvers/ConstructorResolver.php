@@ -162,4 +162,3 @@ final class ConstructorResolver implements ResolverInterface
         return array_unique($dependencies);
     }
 }
-
