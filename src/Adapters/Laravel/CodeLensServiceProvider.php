@@ -83,6 +83,7 @@ class CodeLensServiceProvider extends ServiceProvider
         $this->commands([
             Commands\ScanCommand::class,
             Commands\MetricsCommand::class,
+            Commands\AnalyzeCommand::class,
         ]);
     }
 

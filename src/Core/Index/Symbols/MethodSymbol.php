@@ -7,23 +7,23 @@ namespace CodeLens\Core\Index\Symbols;
 /**
  * Represents a method in a class, interface, trait, or enum.
  */
-final readonly class MethodSymbol implements SymbolInterface
+final class MethodSymbol implements SymbolInterface
 {
     /**
      * @param array<array{name: string, type: ?string, default: bool, byRef: bool, variadic: bool}> $parameters
      */
     public function __construct(
-        public string $name,
-        public string $parentFqn,
-        public string $file,
-        public int $lineStart,
-        public int $lineEnd,
-        public string $visibility = 'public',
-        public bool $isStatic = false,
-        public bool $isAbstract = false,
-        public bool $isFinal = false,
-        public ?string $returnType = null,
-        public array $parameters = [],
+        public readonly string $name,
+        public readonly string $parentFqn,
+        public readonly string $file,
+        public readonly int $lineStart,
+        public readonly int $lineEnd,
+        public readonly string $visibility = 'public',
+        public readonly bool $isStatic = false,
+        public readonly bool $isAbstract = false,
+        public readonly bool $isFinal = false,
+        public readonly ?string $returnType = null,
+        public readonly array $parameters = [],
     ) {
     }
 

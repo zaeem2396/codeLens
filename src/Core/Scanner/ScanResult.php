@@ -10,22 +10,22 @@ use CodeLens\Core\Index\SymbolRegistry;
 /**
  * Result of a scan operation.
  */
-final readonly class ScanResult
+final class ScanResult
 {
     /**
      * @param array<string, string> $errors Path => error message
      */
     public function __construct(
-        public bool $success,
-        public int $scannedFiles,
-        public int $unchangedFiles,
-        public int $removedFiles,
-        public int $totalFiles,
-        public int $totalSymbols,
-        public float $duration,
-        public array $errors,
-        public FileIndex $fileIndex,
-        public SymbolRegistry $symbolRegistry,
+        public readonly bool $success,
+        public readonly int $scannedFiles,
+        public readonly int $unchangedFiles,
+        public readonly int $removedFiles,
+        public readonly int $totalFiles,
+        public readonly int $totalSymbols,
+        public readonly float $duration,
+        public readonly array $errors,
+        public readonly FileIndex $fileIndex,
+        public readonly SymbolRegistry $symbolRegistry,
     ) {
     }
 

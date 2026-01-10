@@ -160,6 +160,19 @@ codelens:
 - ✅ JSON and SQLite storage backends
 - ✅ CLI commands for both frameworks
 
+### Phase 2: Metrics
+- ✅ Lines of code (file-level, with/without comments)
+- ✅ Class, interface, trait, enum counts
+- ✅ Method-level metrics (line count, nesting depth, conditionals, loops)
+- ✅ CLI commands: `codelens:metrics`
+
+### Phase 3: Heuristic Flags
+- ✅ Configurable heuristic rules with thresholds
+- ✅ Soft language (never "bad" or "problem")
+- ✅ Rules: long method, deep nesting, many parameters, high conditionals
+- ✅ Rules: large file, multiple classes per file, many returns
+- ✅ CLI command: `codelens:analyze`
+
 ---
 
 ## 🔍 Scanning Your Codebase
@@ -302,18 +315,6 @@ public function index(\CodeLens\Core\CodeLens $codelens): Response
 ---
 
 ## 🚀 Upcoming Features
-
-### Phase 2: Metrics
-
-- Lines of code
-- Class and method counts
-- Simple web UI to view raw numbers
-
-### Phase 3: Heuristic Flags
-
-- Gentle indicators for potential attention areas
-- "Large file", "Deep nesting", etc.
-- Always with explanations
 
 ### Phase 4: Usage Probability
 

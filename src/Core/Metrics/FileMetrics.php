@@ -9,26 +9,60 @@ namespace CodeLens\Core\Metrics;
  *
  * Contains raw numerical data without any judgments or labels.
  */
-final readonly class FileMetrics
+final class FileMetrics
 {
     /**
      * @param array<MethodMetrics> $methodMetrics
      */
     public function __construct(
-        public string $filePath,
-        public string $relativePath,
-        public int $linesOfCode,
-        public int $linesOfCodeWithoutComments,
-        public int $blankLines,
-        public int $commentLines,
-        public int $classCount,
-        public int $interfaceCount,
-        public int $traitCount,
-        public int $enumCount,
-        public int $methodCount,
-        public int $propertyCount,
-        public array $methodMetrics = [],
+        public readonly string $filePath,
+        public readonly string $relativePath,
+        public readonly int $linesOfCode,
+        public readonly int $linesOfCodeWithoutComments,
+        public readonly int $blankLines,
+        public readonly int $commentLines,
+        public readonly int $classCount,
+        public readonly int $interfaceCount,
+        public readonly int $traitCount,
+        public readonly int $enumCount,
+        public readonly int $methodCount,
+        public readonly int $propertyCount,
+        public readonly array $methodMetrics = [],
     ) {
+    }
+
+    /**
+     * Get file path.
+     */
+    public function getPath(): string
+    {
+        return $this->filePath;
+    }
+
+    /**
+     * Get lines of code.
+     */
+    public function getLines(): int
+    {
+        return $this->linesOfCode;
+    }
+
+    /**
+     * Get class count.
+     */
+    public function getClassCount(): int
+    {
+        return $this->classCount;
+    }
+
+    /**
+     * Get method metrics.
+     *
+     * @return array<MethodMetrics>
+     */
+    public function getMethodMetrics(): array
+    {
+        return $this->methodMetrics;
     }
 
     /**

@@ -7,15 +7,15 @@ namespace CodeLens\Core\Scanner;
 /**
  * Represents information about a discovered file.
  */
-final readonly class FileInfo
+final class FileInfo
 {
     public function __construct(
-        public string $absolutePath,
-        public string $relativePath,
-        public int $size,
-        public int $lastModified,
-        public ?string $checksum = null,
-        public ?int $lineCount = null,
+        public readonly string $absolutePath,
+        public readonly string $relativePath,
+        public readonly int $size,
+        public readonly int $lastModified,
+        public readonly ?string $checksum = null,
+        public readonly ?int $lineCount = null,
     ) {
     }
 

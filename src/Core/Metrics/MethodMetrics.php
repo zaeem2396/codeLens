@@ -9,23 +9,71 @@ namespace CodeLens\Core\Metrics;
  *
  * Contains raw numerical data without any judgments or labels.
  */
-final readonly class MethodMetrics
+final class MethodMetrics
 {
     public function __construct(
-        public string $name,
-        public string $parentClass,
-        public int $lineStart,
-        public int $lineEnd,
-        public int $lineCount,
-        public int $maxNestingDepth,
-        public int $conditionalCount,
-        public int $loopCount,
-        public int $returnCount,
-        public int $parameterCount,
-        public string $visibility,
-        public bool $isStatic,
-        public bool $isAbstract,
+        public readonly string $name,
+        public readonly string $parentClass,
+        public readonly int $lineStart,
+        public readonly int $lineEnd,
+        public readonly int $lineCount,
+        public readonly int $maxNestingDepth,
+        public readonly int $conditionalCount,
+        public readonly int $loopCount,
+        public readonly int $returnCount,
+        public readonly int $parameterCount,
+        public readonly string $visibility,
+        public readonly bool $isStatic,
+        public readonly bool $isAbstract,
     ) {
+    }
+
+    /**
+     * Get method name.
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get line count.
+     */
+    public function getLines(): int
+    {
+        return $this->lineCount;
+    }
+
+    /**
+     * Get max nesting depth.
+     */
+    public function getMaxNestingDepth(): int
+    {
+        return $this->maxNestingDepth;
+    }
+
+    /**
+     * Get parameter count.
+     */
+    public function getParameterCount(): int
+    {
+        return $this->parameterCount;
+    }
+
+    /**
+     * Get conditional count.
+     */
+    public function getConditionalCount(): int
+    {
+        return $this->conditionalCount;
+    }
+
+    /**
+     * Get return count.
+     */
+    public function getReturnCount(): int
+    {
+        return $this->returnCount;
     }
 
     /**

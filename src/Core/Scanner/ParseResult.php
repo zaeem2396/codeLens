@@ -9,19 +9,19 @@ use CodeLens\Core\Index\Symbols\SymbolInterface;
 /**
  * Represents the result of parsing a PHP file.
  */
-final readonly class ParseResult
+final class ParseResult
 {
     /**
      * @param array<SymbolInterface> $symbols
      * @param array<string, string> $useStatements Alias => FQCN
      */
     private function __construct(
-        public string $filePath,
-        public bool $success,
-        public ?string $error,
-        public array $symbols,
-        public ?string $namespace,
-        public array $useStatements,
+        public readonly string $filePath,
+        public readonly bool $success,
+        public readonly ?string $error,
+        public readonly array $symbols,
+        public readonly ?string $namespace,
+        public readonly array $useStatements,
     ) {
     }
 

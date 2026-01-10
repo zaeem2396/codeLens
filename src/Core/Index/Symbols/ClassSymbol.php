@@ -7,7 +7,7 @@ namespace CodeLens\Core\Index\Symbols;
 /**
  * Represents a class in the codebase.
  */
-final readonly class ClassSymbol implements SymbolInterface
+final class ClassSymbol implements SymbolInterface
 {
     /**
      * @param array<MethodSymbol> $methods
@@ -16,20 +16,20 @@ final readonly class ClassSymbol implements SymbolInterface
      * @param array<string> $traits
      */
     public function __construct(
-        public string $name,
-        public string $fqn,
-        public string $file,
-        public int $lineStart,
-        public int $lineEnd,
-        public ?string $namespace = null,
-        public ?string $extends = null,
-        public array $implements = [],
-        public array $traits = [],
-        public array $methods = [],
-        public array $properties = [],
-        public bool $isAbstract = false,
-        public bool $isFinal = false,
-        public bool $isReadonly = false,
+        public readonly string $name,
+        public readonly string $fqn,
+        public readonly string $file,
+        public readonly int $lineStart,
+        public readonly int $lineEnd,
+        public readonly ?string $namespace = null,
+        public readonly ?string $extends = null,
+        public readonly array $implements = [],
+        public readonly array $traits = [],
+        public readonly array $methods = [],
+        public readonly array $properties = [],
+        public readonly bool $isAbstract = false,
+        public readonly bool $isFinal = false,
+        public readonly bool $isReadonly = false,
     ) {
     }
 

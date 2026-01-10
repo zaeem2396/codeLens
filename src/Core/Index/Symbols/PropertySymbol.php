@@ -7,18 +7,18 @@ namespace CodeLens\Core\Index\Symbols;
 /**
  * Represents a property in a class or trait.
  */
-final readonly class PropertySymbol implements SymbolInterface
+final class PropertySymbol implements SymbolInterface
 {
     public function __construct(
-        public string $name,
-        public string $parentFqn,
-        public string $file,
-        public int $line,
-        public string $visibility = 'public',
-        public ?string $type = null,
-        public bool $isStatic = false,
-        public bool $isReadonly = false,
-        public bool $hasDefault = false,
+        public readonly string $name,
+        public readonly string $parentFqn,
+        public readonly string $file,
+        public readonly int $line,
+        public readonly string $visibility = 'public',
+        public readonly ?string $type = null,
+        public readonly bool $isStatic = false,
+        public readonly bool $isReadonly = false,
+        public readonly bool $hasDefault = false,
     ) {
     }
 
