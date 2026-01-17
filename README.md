@@ -69,23 +69,6 @@ CodeLens follows strict design principles to maintain developer trust:
 
 ---
 
-## 📊 Development Phases
-
-CodeLens is being developed in independent, releasable phases:
-
-| Phase | Name | Status |
-|-------|------|--------|
-| 0 | Foundation & Identity | ✅ Complete |
-| 1 | Code Scanning & Indexing | ✅ Complete |
-| 2 | Metrics (Facts, Not Judgments) | ✅ Complete |
-| 3 | Heuristic Flags (Soft Signals) | ✅ Complete |
-| 4 | Usage Probability (Static Only) | 🔲 Planned |
-| 5 | Risk Scoring (Explainable) | 🔲 Planned |
-| 6 | UI Maturity & Navigation | 🔲 Planned |
-| 7 | Framework Parity | 🔲 Planned |
-
----
-
 ## 🔧 Configuration
 
 ### Environment Restrictions
