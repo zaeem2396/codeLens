@@ -165,6 +165,7 @@ codelens:
 - ✅ Class, interface, trait, enum counts
 - ✅ Method-level metrics (line count, nesting depth, conditionals, loops)
 - ✅ CLI commands: `codelens:metrics`
+- ✅ Configurable output with `--limit` and `--all` flags
 
 ### Phase 3: Heuristic Flags
 - ✅ Configurable heuristic rules with thresholds

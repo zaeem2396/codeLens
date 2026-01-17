@@ -19,7 +19,9 @@ class MetricsCommand extends Command
      */
     protected $signature = 'codelens:metrics
                             {--path= : Analyze a specific path only}
-                            {--json : Output as JSON}';
+                            {--json : Output as JSON}
+                            {--limit=10 : Number of files to show in the table (default: 10)}
+                            {--all : Show all files in the table}';
 
     /**
      * The console command description.
@@ -65,8 +67,12 @@ class MetricsCommand extends Command
         // Clear progress line
         $this->output->write("\r" . str_repeat(' ', 80) . "\r");
 
+        // Determine limit for file display
+        $showAll = (bool) $this->option('all');
+        $limit = $showAll ? null : (int) $this->option('limit');
+
         // Display results
-        $this->displayResults($result);
+        $this->displayResults($result, $limit);
 
         return Command::SUCCESS;
     }
@@ -74,7 +80,7 @@ class MetricsCommand extends Command
     /**
      * Display metrics results.
      */
-    private function displayResults(MetricsResult $result): void
+    private function displayResults(MetricsResult $result, ?int $limit): void
     {
         $summary = $result->getSummary();
 
@@ -109,13 +115,16 @@ class MetricsCommand extends Command
         $this->info('');
 
         // Top files by lines
-        $this->displayTopFiles($result, 'lines');
+        $this->displayTopFiles($result, $limit);
     }
 
     /**
-     * Display top files by a metric.
+     * Display top files by lines of code.
+     *
+     * @param MetricsResult $result The metrics result
+     * @param int|null $limit Number of files to show (null = all)
      */
-    private function displayTopFiles(MetricsResult $result, string $metric): void
+    private function displayTopFiles(MetricsResult $result, ?int $limit): void
     {
         $files = $result->fileMetrics;
 
@@ -123,18 +132,24 @@ class MetricsCommand extends Command
             return;
         }
 
-        $this->info('📄 Files by Lines of Code');
+        $totalFiles = count($files);
+        $displayCount = $limit ?? $totalFiles;
+        $label = $limit === null ? "All {$totalFiles}" : "Top {$displayCount}";
+
+        $this->info("📄 {$label} Files by Lines of Code");
         $this->info('-------------------------');
         $this->info('');
 
         // Sort by lines of code
         usort($files, fn ($a, $b) => $b->linesOfCode <=> $a->linesOfCode);
 
-        // Show top 10
+        // Apply limit
+        $filesToShow = $limit === null ? $files : array_slice($files, 0, $limit);
+
         $headers = ['File', 'LOC', 'Classes', 'Methods', 'Max Nest'];
         $rows = [];
 
-        foreach (array_slice($files, 0, 10) as $file) {
+        foreach ($filesToShow as $file) {
             $rows[] = [
                 $this->truncatePath($file->relativePath, 50),
                 $file->linesOfCode,
