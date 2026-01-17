@@ -4,6 +4,7 @@ composer.lock
 
 # Documentation (local development tracking)
 /docs/PROGRESS.md
+/docs/BUGS_AND_IMPROVEMENTS.md
 
 # IDE and Editor files
 .idea/

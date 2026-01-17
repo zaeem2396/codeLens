@@ -39,7 +39,9 @@ class MetricsCommand extends Command
     {
         $this
             ->addOption('path', 'p', InputOption::VALUE_REQUIRED, 'Analyze a specific path only')
-            ->addOption('json', null, InputOption::VALUE_NONE, 'Output as JSON');
+            ->addOption('json', null, InputOption::VALUE_NONE, 'Output as JSON')
+            ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Number of files to show in the table', '10')
+            ->addOption('all', 'a', InputOption::VALUE_NONE, 'Show all files in the table');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -76,8 +78,12 @@ class MetricsCommand extends Command
         // Clear progress line
         $output->write("\r" . str_repeat(' ', 80) . "\r");
 
+        // Determine limit for file display
+        $showAll = (bool) $input->getOption('all');
+        $limit = $showAll ? null : (int) $input->getOption('limit');
+
         // Display results
-        $this->displayResults($io, $output, $result);
+        $this->displayResults($io, $output, $result, $limit);
 
         return Command::SUCCESS;
     }
@@ -85,7 +91,7 @@ class MetricsCommand extends Command
     /**
      * Display metrics results.
      */
-    private function displayResults(SymfonyStyle $io, OutputInterface $output, MetricsResult $result): void
+    private function displayResults(SymfonyStyle $io, OutputInterface $output, MetricsResult $result, ?int $limit): void
     {
         $summary = $result->getSummary();
 
@@ -116,13 +122,15 @@ class MetricsCommand extends Command
         $io->newLine();
 
         // Top files by lines
-        $this->displayTopFiles($io, $output, $result);
+        $this->displayTopFiles($io, $output, $result, $limit);
     }
 
     /**
      * Display top files by lines of code.
+     *
+     * @param int|null $limit Number of files to show (null = all)
      */
-    private function displayTopFiles(SymfonyStyle $io, OutputInterface $output, MetricsResult $result): void
+    private function displayTopFiles(SymfonyStyle $io, OutputInterface $output, MetricsResult $result, ?int $limit): void
     {
         $files = $result->fileMetrics;
 
@@ -130,15 +138,22 @@ class MetricsCommand extends Command
             return;
         }
 
-        $io->section('📄 Files by Lines of Code');
+        $totalFiles = count($files);
+        $displayCount = $limit ?? $totalFiles;
+        $label = $limit === null ? "All {$totalFiles}" : "Top {$displayCount}";
+
+        $io->section("📄 {$label} Files by Lines of Code");
 
         // Sort by lines of code
         usort($files, fn ($a, $b) => $b->linesOfCode <=> $a->linesOfCode);
 
+        // Apply limit
+        $filesToShow = $limit === null ? $files : array_slice($files, 0, $limit);
+
         $table = new Table($output);
         $table->setHeaders(['File', 'LOC', 'Classes', 'Methods', 'Max Nest']);
 
-        foreach (array_slice($files, 0, 10) as $file) {
+        foreach ($filesToShow as $file) {
             $table->addRow([
                 $this->truncatePath($file->relativePath, 50),
                 $file->linesOfCode,

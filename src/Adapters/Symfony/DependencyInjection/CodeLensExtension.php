@@ -7,6 +7,7 @@ namespace CodeLens\Adapters\Symfony\DependencyInjection;
 use CodeLens\Adapters\Symfony\Command\AnalyzeCommand;
 use CodeLens\Adapters\Symfony\Command\MetricsCommand;
 use CodeLens\Adapters\Symfony\Command\ScanCommand;
+use CodeLens\Adapters\Symfony\Command\UsageCommand;
 use CodeLens\Adapters\Symfony\SymfonyAdapter;
 use CodeLens\Core\CodeLens;
 use CodeLens\Core\Config\Configuration;
@@ -92,6 +93,15 @@ class CodeLensExtension extends Extension
         ]);
         $analyzeCommandDefinition->addTag('console.command');
         $container->setDefinition(AnalyzeCommand::class, $analyzeCommandDefinition);
+
+        // Register UsageCommand
+        $usageCommandDefinition = new Definition(UsageCommand::class);
+        $usageCommandDefinition->setArguments([
+            new Reference(Configuration::class),
+            '%kernel.project_dir%',
+        ]);
+        $usageCommandDefinition->addTag('console.command');
+        $container->setDefinition(UsageCommand::class, $usageCommandDefinition);
     }
 
     /**

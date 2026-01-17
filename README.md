@@ -138,14 +138,18 @@ Display codebase metrics (lines of code, classes, methods, nesting depth):
 
 ```bash
 # Laravel
-php artisan codelens:metrics           # Full analysis
-php artisan codelens:metrics --path=app  # Specific path
-php artisan codelens:metrics --json    # JSON output
+php artisan codelens:metrics              # Full analysis (shows top 10 files)
+php artisan codelens:metrics --path=app   # Specific path
+php artisan codelens:metrics --json       # JSON output
+php artisan codelens:metrics --limit=20   # Show top 20 files
+php artisan codelens:metrics --all        # Show all files
 
 # Symfony
 php bin/console codelens:metrics
 php bin/console codelens:metrics --path=src
 php bin/console codelens:metrics --json
+php bin/console codelens:metrics --limit=20
+php bin/console codelens:metrics --all
 ```
 
 ---
